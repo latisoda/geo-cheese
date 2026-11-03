@@ -245,6 +245,66 @@ p { margin: 0 0 1em; }
 .cmp th, .cmp td { border: 1px solid var(--c-line); padding: 8px 10px; text-align: left; vertical-align: top; }
 .cmp th { background: #f3f8fb; font-weight: 700; }
 .cmp td:first-child { font-weight: 600; color: var(--c-primary-deep); background: #fbfdff; white-space: nowrap; }
+/* ===== 地理讲义中心（lecture-notes.html）===== */
+.ln-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+@media (max-width: 900px) { .ln-grid { grid-template-columns: 1fr; } }
+
+.ln-card { background: var(--c-card); border: 1px solid var(--c-line); border-radius: var(--radius); padding: 18px 20px; display: flex; flex-direction: column; gap: 10px; }
+.ln-card .ln-no { font-size: 12px; font-weight: 800; letter-spacing: .08em; color: var(--c-accent); }
+.ln-card h3 { font-size: 18px; margin: 0; }
+.ln-card .ln-meta { font-size: 12.5px; color: var(--c-ink-soft); }
+.ln-card ul { margin: 0; padding-left: 18px; font-size: 13.5px; color: var(--c-ink-soft); }
+.ln-card ul li { margin-bottom: 3px; }
+.ln-card .row { margin-top: auto; }
+
+.ln-article { background: var(--c-card); border: 1px solid var(--c-line); border-radius: var(--radius); padding: 26px 28px; margin-bottom: 26px; }
+.ln-article > h3 { font-size: 22px; display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.ln-article > h3 .no { font-size: 13px; color: var(--c-accent); font-weight: 800; letter-spacing: .06em; }
+.ln-article h4 { font-size: 16px; margin: 22px 0 10px; padding-left: 11px; border-left: 3px solid var(--c-primary); color: var(--c-primary-deep); }
+.ln-article p, .ln-article li { font-size: 14.5px; }
+.ln-article ul, .ln-article ol { padding-left: 22px; margin: 0 0 10px; }
+.ln-article li { margin-bottom: 5px; }
+
+.ln-meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; margin: 16px 0 6px; }
+.ln-meta > div { background: #f5f9fc; border: 1px solid #e2edf4; border-radius: 10px; padding: 10px 13px; }
+.ln-meta b { display: block; font-size: 12px; color: var(--c-ink-soft); font-weight: 700; margin-bottom: 3px; letter-spacing: .04em; }
+.ln-meta span { font-size: 13.5px; color: var(--c-ink); }
+
+.kp { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 12px; margin: 8px 0 4px; }
+.kp > div { background: #fbfdff; border: 1px solid var(--c-line); border-left: 3px solid var(--c-primary); border-radius: 10px; padding: 12px 14px; }
+.kp b { display: block; font-size: 14px; color: var(--c-primary-deep); margin-bottom: 4px; }
+.kp span { font-size: 13.5px; color: var(--c-ink-soft); }
+
+.board { background: #1d2b33; color: #e8f0f2; border-radius: 12px; padding: 18px 20px; margin: 8px 0 4px; font-size: 13.5px; line-height: 1.9; }
+.board .bd-title { font-weight: 800; color: #8fd0c0; margin-bottom: 8px; font-size: 14px; letter-spacing: .05em; }
+.board .bd-mid { color: #ffd98a; }
+.board .bd-side { color: #9fc4e8; }
+
+.trap { background: #fff8f3; border: 1px solid #f3ddc8; border-radius: 12px; padding: 14px 18px; margin: 8px 0 4px; }
+.trap .tt { font-weight: 800; color: #b4672a; font-size: 14px; margin-bottom: 8px; }
+.trap li { font-size: 14px; margin-bottom: 6px; }
+.trap b { color: #8f4d1c; }
+
+.quiz { background: #f3faf6; border: 1px solid #d8ece0; border-radius: 12px; padding: 16px 18px; margin: 8px 0 4px; }
+.quiz .qt { font-weight: 800; color: var(--c-ok); font-size: 14px; margin-bottom: 8px; }
+.quiz li { font-size: 14px; margin-bottom: 6px; }
+
+.reslink { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
+.reslink a { display: inline-flex; align-items: center; gap: 6px; background: #eef3f9; border: 1px solid var(--c-line); border-radius: 999px; padding: 6px 13px; font-size: 13px; font-weight: 600; color: var(--c-primary-deep); }
+.reslink a:hover { background: #e0ebf4; text-decoration: none; }
+
+.hl { background: linear-gradient(transparent 62%, #ffe9b8 62%); padding: 0 2px; }
+.stu { background: #f7fbff; border: 1px dashed #b9d7e8; border-radius: 12px; padding: 14px 18px; margin: 8px 0 4px; }
+.stu .st { font-weight: 800; color: var(--c-primary); font-size: 13.5px; margin-bottom: 7px; }
+
+@media print {
+  .topbar, .reslink, .row, .footer { display: none !important; }
+  .ln-article { break-inside: avoid; page-break-inside: avoid; border: 1px solid #ccc; }
+  .board { background: #f4f4f4 !important; color: #111 !important; border: 1px solid #bbb; }
+  .board .bd-title, .board .bd-mid, .board .bd-side { color: #111 !important; }
+  body { background: #fff; }
+}
+
 .backlink { font-size: 14px; }
 
 /* ===== 科普插图 SVG ===== */
