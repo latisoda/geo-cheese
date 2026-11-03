@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>教学案生成器 · 硬糖的地理芝士</title>
+<link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+
+<!-- ===== 顶栏 ===== -->
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="brand"><span class="logo">地</span> 硬糖的地理芝士</div>
+    <nav class="toc">
+      <a href="index.html" class="backlink">← 工作台</a>
+      <a href="textbooks.html">教材资源包</a>
+      <a href="#input">输入主题</a>
+      <a href="#teacher">教师教学案</a>
+      <a href="#student">学生导学案</a>
+    </nav>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="hero-inner">
+    <h1>教学案生成器</h1>
+    <p>调取「教材资源包」的多版本目录数据，为你输入的教案主题定位各版落点、融合案例，一键生成<b>教师教学案</b>与<b>学生导学案</b>。两份文档均可在线编辑、打印或复制。</p>
+    <div class="cloud-banner">
+      <span>🛠️</span>
+      <div><b>当前为"结构化整合生成"。</b> 依据你选的课标模块与版本，从教材资源包数据中组装教学案框架并标注多版来源。云服务开通后，可接入云端大模型做更深度的内容生成与个性化改写。</div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ===== 输入区 ===== -->
+  <section class="section" id="input">
+    <div class="section-head">
+      <span class="kicker">STEP 1</span>
+      <h2>填写主题与整合范围</h2>
+      <p>输入教案主题，选择该主题对应的课标模块（用于跨版定位），勾选要整合的教材版本，然后点"生成教学案"。</p>
+    </div>
+    <div class="module">
+      <div class="module-body">
+        <div class="form-grid">
+          <div class="field"><label>教案主题</label><input id="topic" type="text" placeholder="如：大气的受热过程 / 人口迁移 / 地貌的观察" /></div>
+          <div class="field"><label>年级 / 学科</label><input id="grade" type="text" placeholder="高一 / 地理" /></div>
+        </div>
+        <div class="form-grid">
+          <div class="field">
+            <label>对应课标模块（用于跨版定位）</label>
+            <select id="module">
+              <optgroup label="必修">
+                <option>宇宙中的地球</option>
+                <option>大气</option>
+                <option>水</option>
+                <option>地貌</option>
+                <option>植被与土壤</option>
+                <option>自然灾害</option>
+                <option>人口</option>
+                <option>城镇与乡村</option>
+                <option>产业区位</option>
+                <option>交通运输与区域</option>
+                <option>环境与发展</option>
+              </optgroup>
+              <optgroup label="选择性必修">
+                <option>地球的运动</option>
+                <option>地表形态的塑造</option>
+                <option>大气的运动</option>
+                <option>水体运动</option>
+                <option>整体性与差异性</option>
+                <option>区域与区域发展</option>
+                <option>区域发展的异同</option>
+                <option>自然资源</option>
+                <option>环境问题与保护</option>
+                <option>资源环境安全</option>
+              </optgroup>
+            </select>
+          </div>
+          <div class="field"><label>课时</label><input id="periods" type="text" placeholder="1 课时" /></div>
+        </div>
+        <div class="field">
+          <label>整合哪些教材版本</label>
+          <div class="row" id="editionBox">
+            <label class="tab active"><input type="checkbox" value="人教版" checked /> 人教版</label>
+            <label class="tab"><input type="checkbox" value="鲁教版" checked /> 鲁教版</label>
+            <label class="tab"><input type="checkbox" value="湘教版" checked /> 湘教版</label>
+            <label class="tab"><input type="checkbox" value="中图版" checked /> 中图版</label>
+            <label class="tab"><input type="checkbox" value="国外" /> 国外（《科学发现者》等）</label>
+          </div>
+        </div>
+        <div class="row" style="margin-top:6px">
+          <button class="btn" id="genBtn" type="button">⚙️ 生成教学案</button>
+          <span class="empty-hint" id="genHint">生成后可在下方直接修改。</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 教师教学案 ===== -->
+  <section class="section" id="teacher">
+    <div class="section-head">
+      <span class="kicker">TEACHER</span>
+      <h2>教师教学案（可编辑）</h2>
+      <p>含教材整合说明、核心素养目标、重难点、教学过程（多版融合）、板书与反思位。</p>
+    </div>
+    <div class="module">
+      <div class="module-body">
+        <div id="teacherPlan"><div class="empty-hint">↑ 填写上方信息并点"生成教学案"，这里会出现可编辑的教师教学案。</div></div>
+        <div class="row" style="margin-top:14px" id="teacherBtns" hidden>
+          <button class="btn sm" type="button" onclick="printTemplate('teacherPlan')">打印 / 导出 PDF</button>
+          <button class="btn ghost sm" type="button" onclick="exportDoc('teacherPlan','教师教学案')">导出 Word</button>
+          <button class="btn ghost sm" type="button" onclick="copyTemplate('teacherPlan')">复制内容</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 学生导学案 ===== -->
+  <section class="section" id="student">
+    <div class="section-head">
+      <span class="kicker">STUDENT</span>
+      <h2>学生导学案（可编辑）</h2>
+      <p>含学习目标、预习导航、课中探究任务（基于多版案例）、课堂检测、小结与分层作业。</p>
+    </div>
+    <div class="module">
+      <div class="module-body">
+        <div id="studentPlan"><div class="empty-hint">↑ 生成后这里会出现配套的学生导学案。</div></div>
+        <div class="row" style="margin-top:14px" id="studentBtns" hidden>
+          <button class="btn sm" type="button" onclick="printTemplate('studentPlan')">打印 / 导出 PDF</button>
+          <button class="btn ghost sm" type="button" onclick="exportDoc('studentPlan','学生导学案')">导出 Word</button>
+          <button class="btn ghost sm" type="button" onclick="copyTemplate('studentPlan')">复制内容</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="note">说明：生成的文档为基于教材资源包数据的结构化整合模板，具体案例、数据与活动需你结合班情与手中教材/教参细化。云端大模型开通后可一键深化改写。</div>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div>硬糖的地理芝士 · 教学案生成器（教师教学案 + 学生导学案）</div>
+    <div><a href="index.html">← 工作台</a> · <a href="textbooks.html">教材资源包</a> · ☁️ 云同步待启用</div>
+  </div>
+</footer>
+
+<script src="assets/app.js"></script>
+<script>
+/* ===== 教材资源包数据（与 textbooks.html 同源，用于跨版定位） ===== */
+const TB = {
+  人教版: {
+    '宇宙中的地球':'必修1 第一章 宇宙中的地球（地球在宇宙中/太阳对地球的影响/地球的历史/圈层结构）',
+    '大气':'必修1 第二章 地球上的大气（组成和垂直分层/受热过程和大气运动）',
+    '水':'必修1 第三章 地球上的水（水循环/海水的性质/海水的运动）',
+    '地貌':'必修1 第四章 地貌（常见地貌类型/地貌的观察）',
+    '植被与土壤':'必修1 第五章 植被与土壤（植被/土壤）',
+    '自然灾害':'必修1 第六章 自然灾害（气象/地质灾害/防灾减灾/GIS）',
+    '人口':'必修2 第一章 人口（分布/迁移/容量）',
+    '城镇与乡村':'必修2 第二章 乡村和城镇（空间结构/城镇化/地域文化）',
+    '产业区位':'必修2 第三章 产业区位因素（农/工/服务业）',
+    '交通运输与区域':'必修2 第四章 交通运输布局与区域发展',
+    '环境与发展':'必修2 第五章 环境与发展（环境问题/可持续/国家战略）'
+  },
+  鲁教版: {
+    '宇宙中的地球':'必修1 第一单元 从宇宙看地球（宇宙环境/自转意义/公转意义）',
+    '大气':'必修1 第二单元 大气圈',
+    '水':'必修1 第二单元 水圈',
+    '地貌':'必修1 第三单元 地貌与土壤（地表形态/土壤）',
+    '植被与土壤':'必修1 第三单元 土壤',
+    '自然灾害':'必修1 第四单元 资源与环境（自然灾害）',
+    '人口':'必修2 第一单元 人口与环境',
+    '城镇与乡村':'必修2 第二单元 城镇与乡村',
+    '产业区位':'必修2 第三单元 产业区位选择',
+    '交通运输与区域':'必修2 第四单元 区域协同发展（含交通）',
+    '环境与发展':'必修2 第五单元 人地关系与可持续发展'
+  },
+  湘教版: {
+    '宇宙中的地球':'必修1 第一章 地球概论（宇宙/太阳/历史/圈层）',
+    '大气':'必修1 第三章 大气圈与大气运动（分层/受热/运动/天气系统/气候）',
+    '水':'必修1 第四章 水圈与水循环',
+    '地貌':'必修1 第二章 岩石圈与地表形态',
+    '植被与土壤':'（融入相关章：植被与土壤）',
+    '自然灾害':'（融入相关章：自然灾害）',
+    '人口':'必修2 第一章 人口',
+    '城镇与乡村':'必修2 第二章 城镇与乡村',
+    '产业区位':'必修2 第三章 产业区位',
+    '交通运输与区域':'必修2 第四章 区域发展战略',
+    '环境与发展':'必修2 第五章 人地关系与可持续发展'
+  },
+  中图版: {
+    '宇宙中的地球':'必修1 第一章 宇宙中的地球',
+    '大气':'必修1 第二章 自然地理要素（大气）',
+    '水':'必修1 第二章 自然地理要素（水）',
+    '地貌':'必修1 第二章 自然地理要素（地貌）',
+    '植被与土壤':'必修1 第二章 自然地理要素（植被与土壤）',
+    '自然灾害':'必修1 第二章 自然地理要素（自然灾害）',
+    '人口':'必修2 第一章 人口',
+    '城镇与乡村':'必修2 第二章 城镇与乡村',
+    '产业区位':'必修2 第三章 产业区位',
+    '交通运输与区域':'必修2 第四章 环境与发展（含区域）',
+    '环境与发展':'必修2 第四章 环境与发展'
+  },
+  国外: {
+    '宇宙中的地球':'Earth Science: 太阳系与宇宙',
+    '大气':'Earth Science / Weather & Climate: 大气与天气',
+    '水':'Earth Science: 海洋与水体',
+    '地貌':'Earth Science: 地表形态与岩石',
+    '植被与土壤':'Environmental Science: 生态系统',
+    '自然灾害':'Earth Science: 自然灾害（地震/火山/气象）',
+    '人口':'AP Human Geography: 人口与迁移',
+    '城镇与乡村':'AP Human Geography: 城市体系',
+    '产业区位':'AP Human Geography: 农业/工业区位',
+    '交通运输与区域':'World Geography: 空间与区域',
+    '环境与发展':'AP Environmental Science'
+  }
+};
+
+/* 选择性必修（四版同构于课标，差异在案例/顺序） */
+Object.assign(TB['人教版'], {
+  '地球的运动':'选必1 第一章 地球的运动（自转/公转地理意义）',
+  '地表形态的塑造':'选必1 第二章 地表形态的塑造（内外力/构造地貌/河流地貌）',
+  '大气的运动':'选必1 第三章 大气的运动（天气系统/气压带风带/气候）',
+  '水体运动':'选必1 第四章 水体运动（陆地水体/洋流/海气作用）',
+  '整体性与差异性':'选必1 第五章 自然环境的整体性与差异性（整体性/差异性/土壤/植被）',
+  '区域与区域发展':'选必2 第一章 区域与区域发展',
+  '区域发展的异同':'选必2 第二~三章（资源型/生态脆弱区/城市辐射/产业转移/调配/合作）',
+  '自然资源':'选必3 第一章 自然资源（耕地/石油/矿产/水）',
+  '环境问题与保护':'选必3 第二章 环境问题与保护（污染/气候变化）',
+  '资源环境安全':'选必3 第三~四章 资源安全与国家安全/环境安全与国家安全'
+});
+Object.assign(TB['鲁教版'], {
+  '地球的运动':'选必1 第一单元 地球运动（自转/公转）',
+  '地表形态的塑造':'选必1 第二单元 地形与地壳运动',
+  '大气的运动':'选必1 第三单元 大气运动',
+  '水体运动':'选必1 第四单元 水体运动',
+  '整体性与差异性':'选必1 第五单元 自然环境的整体性与差异性',
+  '区域与区域发展':'选必2 第一单元 区域与区域发展',
+  '区域发展的异同':'选必2 第二~三单元（生态脆弱区/资源型/城市/产业转移/合作）',
+  '自然资源':'选必3 第一单元 自然资源',
+  '环境问题与保护':'选必3 第二单元 环境保护',
+  '资源环境安全':'选必3 第三~四单元 资源安全/环境安全'
+});
+Object.assign(TB['湘教版'], {
+  '地球的运动':'选必1 第一章 地球的运动',
+  '地表形态的塑造':'选必1 第二章 地表形态的塑造',
+  '大气的运动':'选必1 第三章 大气的运动',
+  '水体运动':'选必1 第四章 水体运动',
+  '整体性与差异性':'选必1 第五章 自然环境的整体性与差异性',
+  '区域与区域发展':'选必2 第一章 区域与区域发展',
+  '区域发展的异同':'选必2 第二~三章（生态脆弱区/资源型/城市/产业转移/合作）',
+  '自然资源':'选必3 第一章 自然资源与环境',
+  '环境问题与保护':'选必3 第二章 环境保护',
+  '资源环境安全':'选必3 第三~四章 资源/环境安全'
+});
+Object.assign(TB['中图版'], {
+  '地球的运动':'选必1 第一章 地球的运动',
+  '地表形态的塑造':'选必1 第二章 地表形态的变化',
+  '大气的运动':'选必1 第三章 大气的运动',
+  '水体运动':'选必1 第四章 水体运动',
+  '整体性与差异性':'选必1 第五章 自然环境的整体性与差异性',
+  '区域与区域发展':'选必2 第一章 区域与区域发展',
+  '区域发展的异同':'选必2 第二~三章（生态脆弱区/资源型/城市/产业转移/合作）',
+  '自然资源':'选必3 第一章 自然资源',
+  '环境问题与保护':'选必3 第二章 环境保护',
+  '资源环境安全':'选必3 第三~四章 资源/环境安全'
+});
+Object.assign(TB['国外'], {
+  '地球的运动':'Earth Science / Astronomy: 地球运动与时空',
+  '地表形态的塑造':'Earth Science: 岩石与地貌过程',
+  '大气的运动':'Weather & Climate: 大气环流与天气',
+  '水体运动':'Earth Science: 海洋与水体循环',
+  '整体性与差异性':'Environmental Science: 生态系统与生物群系',
+  '区域与区域发展':'AP Human Geography: 区域发展',
+  '区域发展的异同':'AP Human Geography: 发展不平衡',
+  '自然资源':'AP Environmental Science: 自然资源',
+  '环境问题与保护':'AP Environmental Science: 污染与保护',
+  '资源环境安全':'AP Environmental Science: 资源与环境安全'
+});
+
+function selectedEditions() {
+  return Array.from(document.querySelectorAll('#editionBox input:checked')).map(i => i.value);
+}
+
+function buildIntegration(module, editions) {
+  let lines = editions.map(e => '· ' + e + '：' + (TB[e][module] || '（暂无对应）')).join('\n');
+  if (editions.length >= 2) {
+    lines += '\n\n融合建议：以' + editions[0] + '的体系为主干讲清原理，借' +
+      editions.slice(1).join('、') + '的案例、图表与活动设计互补；中图版（若选用）可强化地图与读图训练。';
+  }
+  return lines;
+}
+
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+function generate() {
+  const topic = document.getElementById('topic').value.trim() || document.getElementById('module').value;
+  const module = document.getElementById('module').value;
+  const grade = document.getElementById('grade').value.trim() || '高一 / 地理';
+  const periods = document.getElementById('periods').value.trim() || '1 课时';
+  const editions = selectedEditions();
+  if (!editions.length) { alert('请至少勾选一个要整合的教材版本。'); return; }
+  const integ = buildIntegration(module, editions);
+
+  const teacher = ''
+    + '<div class="field"><label>课题</label><input value="' + esc('《' + topic + '》教学案（' + module + '）') + '"></div>'
+    + '<div class="field"><label>年级 / 学科 / 课时</label><input value="' + esc(grade + ' / ' + periods) + '"></div>'
+    + '<div class="field"><label>一、教材整合说明（多版本定位）</label><textarea>' + esc(integ) + '</textarea></div>'
+    + '<div class="field"><label>二、教学目标（地理核心素养）</label><textarea>'
+      + '人地协调观：结合《' + esc(topic) + '》理解人类活动与地理环境的相互作用。\n'
+      + '综合思维：从要素综合、时空综合角度分析' + esc(module) + '的形成与变化。\n'
+      + '区域认知：在区域背景下认识' + esc(topic) + '的空间分布与差异。\n'
+      + '地理实践力：通过读图、观察或小实验获取并阐释地理信息。</textarea></div>'
+    + '<div class="field"><label>三、教学重难点</label><textarea>重点：' + esc(topic) + '的核心概念与过程。\n难点：原理的迁移应用与成因解释。</textarea></div>'
+    + '<div class="field"><label>四、教学过程</label><textarea>'
+      + '【导入】以生活现象/新闻情境引出' + esc(topic) + '。\n'
+      + '【新授·多版融合】\n' + esc(integ) + '\n'
+      + '【学生活动】分组探究、读图填图、微实验或案例分析。\n'
+      + '【小结】由学生归纳，教师补框架。\n'
+      + '【作业】基础+拓展分层。</textarea></div>'
+    + '<div class="field"><label>五、板书设计</label><textarea>主板书：' + esc(topic) + ' 概念图\n副板书：关键词与易错点</textarea></div>'
+    + '<div class="field"><label>六、授课后反思（预留）</label><textarea></textarea></div>';
+
+  const student = ''
+    + '<div class="field"><label>课题</label><input value="' + esc('《' + topic + '》导学案') + '"></div>'
+    + '<div class="field"><label>学习目标</label><textarea>我能说出' + esc(topic) + '的基本概念。\n我能解释其核心过程与成因。\n我能运用所学分析一个真实案例。</textarea></div>'
+    + '<div class="field"><label>预习导航（课前）</label><textarea>回顾旧知：与本课相关的已有知识。\n自主预习：阅读教材对应章节（' + esc(editions.join('、')) + '），标注疑问。</textarea></div>'
+    + '<div class="field"><label>课中探究任务</label><textarea>任务1（依托' + esc(editions[0]) + '）：读图/析例，归纳' + esc(topic) + '。\n任务2（融合' + esc(editions.slice(1).join('、') || '其他版本') + '）：对比不同案例，深化理解。\n任务3：小组汇报与互评。</textarea></div>'
+    + '<div class="field"><label>课堂检测</label><textarea>1. 基础题（概念辨析）。\n2. 应用题（情境分析）。</textarea></div>'
+    + '<div class="field"><label>本课小结</label><textarea>用一句话概括：' + esc(topic) + ' 是什么、为什么、如何用。</textarea></div>'
+    + '<div class="field"><label>课后作业（分层）</label><textarea>基础：教材习题/填图。\n拓展：一个身边的' + esc(module) + '观察或小调查。</textarea></div>';
+
+  document.getElementById('teacherPlan').innerHTML = teacher;
+  document.getElementById('studentPlan').innerHTML = student;
+  document.getElementById('teacherBtns').hidden = false;
+  document.getElementById('studentBtns').hidden = false;
+  document.getElementById('genHint').textContent = '已生成，可直接修改后打印/复制。';
+}
+
+document.getElementById('genBtn').addEventListener('click', generate);
+</script>
+</body>
+</html>

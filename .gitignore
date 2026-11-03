@@ -1,0 +1,7 @@
+# WorkBuddy 应用卡片（本地预览用，不入仓库）
+.wbapp_*.genie
+
+# 临时校验/构建目录
+.tmp-check/
+.DS_Store
+node_modules/

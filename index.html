@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>硬糖的地理芝士 · 备课·授课·反思·教研</title>
+<link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+
+<!-- ===== 顶栏 / 总目录 ===== -->
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="brand"><span class="logo">地</span> 硬糖的地理芝士</div>
+    <nav class="toc">
+      <a href="#mod-prep">① 日常备课</a>
+      <a href="#mod-teach">② 授课</a>
+      <a href="#mod-reflect">③ 教学反思</a>
+      <a href="#mod-research">④ 教研</a>
+      <a href="#hub">上传·分析·汇总</a>
+      <a href="#templates">模板库</a>
+      <a href="#refs">参考体系</a>
+      <a href="textbooks.html">📚 教材资源包</a>
+      <a href="lesson-planner.html">🛠 教学案生成器</a>
+      <a href="#class">⑤ 班级成绩</a>
+      <a href="#kanban">⑥ 听评课/日历</a>
+      <a href="science-illustration.html">🎨 科普插图</a>
+    </nav>
+  </div>
+</div>
+
+<!-- ===== Hero ===== -->
+<header class="hero">
+  <div class="hero-inner">
+    <h1>硬糖的地理芝士</h1>
+    <p>为日常备课、授课、反思（改进 / 阶段性评价 / 总结性评价）与教育教学研究打造的一体化专业空间。所有教学文档、课件、授课思路、灵感与教研成果，都能在这里上传、分析与汇总。</p>
+    <div class="hero-tags">
+      <span>📚 备课设计</span><span>🎓 授课记录</span><span>🪞 教学反思</span>
+      <span>🔬 教育研究</span><span>☁️ 云存储</span><span>🤖 AI 分析汇总</span>
+    </div>
+    <div class="cloud-banner">
+      <span>☁️</span>
+      <div><b>云服务开通状态：待启用。</b> 后端资源暂时紧张，开通后将自动接入云存储（上传/下载）与云端大模型（分析/汇总）。当前你已可正常使用全部模板与界面；上传的文件在本机预览，开通后立即同步上云，不会丢失。</div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ===== 模块一：日常备课 ===== -->
+  <section class="section" id="mod-prep">
+    <div class="section-head">
+      <span class="kicker">MODULE 01</span>
+      <h2>① 日常备课</h2>
+      <p>参照北大附中"单元教学 + PBL 项目式学习"、清华附中"核心素养 + 大单元"、纽约高中"UbD 逆向设计"，提供可直接填写的备课模板。备课成果（教案、课件、授课思路）可在下方上传中心归档。</p>
+    </div>
+
+    <div class="module">
+      <div class="module-head">
+        <div class="num">1</div>
+        <div><h3>备课模板与授课思路</h3><div class="sub">单元 / 课时 / 项目式 / 授课思路</div></div>
+      </div>
+      <div class="module-body">
+        <div class="tabs">
+          <div class="tab active" data-target="prep-unit">单元教学设计（UbD）</div>
+          <div class="tab" data-target="prep-lesson">课时教案</div>
+          <div class="tab" data-target="prep-pbl">PBL 项目设计</div>
+          <div class="tab" data-target="prep-idea">授课思路</div>
+        </div>
+
+        <!-- 单元教学设计 -->
+        <div class="panel active" id="prep-unit">
+          <div class="note">借鉴威金斯《追求理解的教学设计》（UbD）三阶段：明确预期结果 → 确定评估证据 → 规划学习计划（WHERETO）。</div>
+          <div id="tpl-unit">
+            <div class="form-grid">
+              <div class="field"><label>学科 / 年级</label><input type="text" placeholder="如：高中语文 / 高一" /></div>
+              <div class="field"><label>单元主题</label><input type="text" placeholder="如：乡土中国与家国情怀" /></div>
+            </div>
+            <div class="field"><label>一、预期学习结果（学生将理解… / 能迁移运用…）</label><textarea placeholder="核心概念、持久理解、基本问题（Essential Questions）"></textarea></div>
+            <div class="field"><label>二、评估证据（用什么证明学生达成了理解）</label><textarea placeholder="表现性任务 + 其他证据（小测/观察/作业）"></textarea></div>
+            <div class="field"><label>三、学习计划（WHERETO）</label><textarea placeholder="W 何处/为何 → H 钩子 → E 探索/体验 → R 反思/重演 → E 装备/赋能 → T  tailor 定制 → O 组织"></textarea></div>
+            <div class="field"><label>核心素养落点</label><textarea placeholder="对应学科核心素养的具体表现"></textarea></div>
+          </div>
+          <div class="row"><button class="btn sm" onclick="printTemplate('tpl-unit')">打印 / 导出 PDF</button><button class="btn ghost sm" onclick="copyTemplate('tpl-unit')">复制内容</button></div>
+        </div>
+
+        <!-- 课时教案 -->
+        <div class="panel" id="prep-lesson">
+          <div id="tpl-lesson">
+            <div class="form-grid">
+              <div class="field"><label>课题</label><input type="text" placeholder="课时名称" /></div>
+              <div class="field"><label>课型 / 时长</label><input type="text" placeholder="新授课 / 45 分钟" /></div>
+            </div>
+            <div class="field"><label>教学目标（知识与能力 / 过程与方法 / 情感态度价值观）</label><textarea></textarea></div>
+            <div class="field"><label>教学重点与难点</label><textarea placeholder="重点：…　难点：…"></textarea></div>
+            <div class="field"><label>教学过程（导入—新授—活动—小结—作业）</label><textarea placeholder="分环节写明教师活动 / 学生活动 / 设计意图"></textarea></div>
+            <div class="field"><label>板书设计</label><textarea></textarea></div>
+            <div class="field"><label>分层作业 / 差异化</label><textarea placeholder="基础 / 提高 / 拓展"></textarea></div>
+            <div class="field"><label>授课后反思（预留）</label><textarea placeholder="留待模块③填写"></textarea></div>
+          </div>
+          <div class="row"><button class="btn sm" onclick="printTemplate('tpl-lesson')">打印 / 导出 PDF</button><button class="btn ghost sm" onclick="copyTemplate('tpl-lesson')">复制内容</button></div>
+        </div>
+
+        <!-- PBL -->
+        <div class="panel" id="prep-pbl">
+          <div class="note">北大附中风格：以真实情境中的复杂问题为驱动，长周期探究，形成可公开呈现的成果，过程中接受反馈并迭代。</div>
+          <div id="tpl-pbl">
+            <div class="field"><label>驱动性问题（Driving Question）</label><textarea placeholder="一个开放、真实、值得持续探究的问题"></textarea></div>
+            <div class="field"><label>真实情境与受众</label><textarea placeholder="为谁解决？在什么场景中？"></textarea></div>
+            <div class="field"><label>学科知识与能力整合</label><textarea placeholder="跨学科 / 学科内知识地图"></textarea></div>
+            <div class="field"><label>核心任务与可呈现成果</label><textarea placeholder="产品 / 方案 / 报告 / 作品 / 服务"></textarea></div>
+            <div class="form-grid">
+              <div class="field"><label>周期</label><input type="text" placeholder="如：4 周" /></div>
+              <div class="field"><label>里程碑节点</label><input type="text" placeholder="阶段检查点" /></div>
+            </div>
+            <div class="field"><label>评价方式（过程 + 成果）</label><textarea placeholder="量规 Rubric / 同伴互评 / 公开展示"></textarea></div>
+          </div>
+          <div class="row"><button class="btn sm" onclick="printTemplate('tpl-pbl')">打印 / 导出 PDF</button><button class="btn ghost sm" onclick="copyTemplate('tpl-pbl')">复制内容</button></div>
+        </div>
+
+        <!-- 授课思路 -->
+        <div class="panel" id="prep-idea">
+          <div class="note">"授课思路"是上传中心的五类内容之一，这里快速记录，也可在下方上传中心归档成稿。</div>
+          <div id="tpl-idea">
+            <div class="field"><label>这节课我想突破的核心</label><textarea placeholder="一句话点明教学立意"></textarea></div>
+            <div class="field"><label>主线 / 逻辑链</label><textarea placeholder="由浅入深、由现象到本质的推进路径"></textarea></div>
+            <div class="field"><label>关键活动设计</label><textarea placeholder="最能激发学生思维的活动"></textarea></div>
+            <div class="field"><label>可能的难点与预案</label><textarea></textarea></div>
+          </div>
+          <div class="row"><button class="btn sm" onclick="printTemplate('tpl-idea')">打印 / 导出 PDF</button><button class="btn ghost sm" onclick="copyTemplate('tpl-idea')">复制内容</button></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 模块二：授课 ===== -->
+  <section class="section" id="mod-teach">
+    <div class="section-head">
+      <span class="kicker">MODULE 02</span>
+      <h2>② 授课</h2>
+      <p>课件归档、课堂实录与授课记录、差异化教学笔记。课件上传请在下方"上传·分析·汇总中心"选择「课件」类别。</p>
+    </div>
+    <div class="grid grid-3">
+      <div class="card">
+        <div class="ic">📊</div>
+        <h3>课件管理</h3>
+        <p>按单元 / 课时归类 PPT、PDF、视频等课件，开通云端后可在线预览与跨设备调用。</p>
+        <a class="more" href="#hub">前往上传中心 →</a>
+      </div>
+      <div class="card">
+        <div class="ic">🎬</div>
+        <h3>课堂实录 / 授课记录</h3>
+        <p>记录当堂环节用时、学生参与度、突发状况与临场调整，为反思积累一手素材。</p>
+        <span class="tag">含模板</span>
+      </div>
+      <div class="card">
+        <div class="ic">🧩</div>
+        <h3>差异化教学笔记</h3>
+        <p>针对学优生 / 学困生 / 不同学习风格的分层策略与个别化支持记录。</p>
+        <span class="tag">含模板</span>
+      </div>
+    </div>
+    <div class="module" style="margin-top:18px">
+      <div class="module-head"><div class="num">2</div><div><h3>授课记录模板</h3><div class="sub">课堂实录 · 差异化</div></div></div>
+      <div class="module-body">
+        <div class="tabs">
+          <div class="tab active" data-target="teach-log">课堂实录</div>
+          <div class="tab" data-target="teach-diff">差异化笔记</div>
+        </div>
+        <div class="panel active" id="teach-log">
+          <div id="tpl-teachlog">
+            <div class="form-grid">
+              <div class="field"><label>班级 / 日期</label><input type="text" /></div>
+              <div class="field"><label>课题</label><input type="text" /></div>
+            </div>
+            <div class="field"><label>环节与时间分配</label><textarea placeholder="导入(5')—讲授(15')—活动(15')—小结(5')—作业(5')"></textarea></div>
+            <div class="field"><label>学生参与与生成</label><textarea placeholder="有价值的回答、争论、错误资源"></textarea></div>
+            <div class="field"><label>临场调整与原因</label><textarea></textarea></div>
+            <div class="field"><label>待改进点（链接反思模块）</label><textarea></textarea></div>
+          </div>
+          <div class="row"><button class="btn sm" onclick="printTemplate('tpl-teachlog')">打印 / 导出 PDF</button><button class="btn ghost sm" onclick="copyTemplate('tpl-teachlog')">复制内容</button></div>
+        </div>
+        <div class="panel" id="teach-diff">
+          <div id="tpl-diff">
+            <div class="field"><label>分层对象</label><input type="text" placeholder="学优生 / 学困生 / 视觉型…" /></div>
+            <div class="field"><label>支持策略</label><textarea placeholder="任务难度、脚手架、分组、资源"></textarea></div>
+            <div class="field"><label>效果观察</label><textarea></textarea></div>
+          </div>
+          <div class="row"><button class="btn sm" onclick="printTemplate('tpl-diff')">打印 / 导出 PDF</button><button class="btn ghost sm" onclick="copyTemplate('tpl-diff')">复制内容</button></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 模块三：教学反思 ===== -->
+  <section class="section" id="mod-reflect">
+    <div class="section-head">
+      <span class="kicker">MODULE 03</span>
+      <h2>③ 教学反思</h2>
+      <p>覆盖你提出的三个层面：<b>改进</b>（针对单节课的迭代）、<b>阶段性评价</b>（单元 / 期中过程性反馈）、<b>总结性评价</b>（期末 / 试卷分析）。形成"计划—实施—评价—改进"的闭环。</p>
+    </div>
+    <div class="module">
+      <div class="module-head"><div class="num">3</div><div><h3>反思三层面</h3><div class="sub">改进 · 阶段性评价 · 总结性评价</div></div></div>
+      <div class="module-body">
+        <div class="tabs">
+          <div class="tab active" data-target="rf-imp">改进反思</div>
+          <div class="tab" data-target="rf-form">阶段性评价</div>
+          <div class="tab" data-target="rf-sum">总结性评价</div>
+        </div>
+        <div class="panel active" id="rf-imp">
+          <div id="tpl-rfimp">
+            <div class="form-grid">
+              <div class="field"><label>课题 / 日期</label><input type="text" /></div>
+              <div class="field"><label>总体满意度（1-5）</label><input type="text" placeholder="如：3.5" /></div>
+            </div>
+            <div class="field"><label>做得好的地方</label><textarea></textarea></div>
+            <div class="field"><label>不足与原因</label><textarea></textarea></div>
+            <div class="field"><label>下次改进的具体动作</label><textarea placeholder="可检验、可操作的改进项"></textarea></div>
+          </div>
+          <div class="row"><button class="btn sm" onclick="printTemplate('tpl-rfimp')">打印 / 导出 PDF</button><button class="btn ghost sm" onclick="copyTemplate('tpl-rfimp')">复制内容</button></div>
+        </div>
+        <div class="panel" id="rf-form">
+          <div class="note">阶段性评价 = 形成性评价（Formative）：在学习过程中收集证据、及时调整。参考纽约高中档案袋（Portfolio）评估思路。</div>
+          <div id="tpl-rfform">
+            <div class="field"><label>评价周期 / 单元</label><input type="text" placeholder="如：第二单元 期中前" /></div>
+            <div class="field"><label>评价维度与工具</label><textarea placeholder="课堂观察 / 小测 / 作业 / 表现性任务 / 自评互评"></textarea></div>
+            <div class="field"><label>数据汇总（达标率、典型错因）</label><textarea></textarea></div>
+            <div class="field"><label>对教学的调整决策</label><textarea placeholder="下一步教什么、怎么教"></textarea></div>
+          </div>
+          <div class="row"><button class="btn sm" onclick="printTemplate('tpl-rfform')">打印 / 导出 PDF</button><button class="btn ghost sm" onclick="copyTemplate('tpl-rfform')">复制内容</button></div>
+        </div>
+        <div class="panel" id="rf-sum">
+          <div class="note">总结性评价（Summative）：单元 / 期末的学业成就判定，重在诊断与归因，反哺下阶段教学。</div>
+          <div id="tpl-rfsum">
+            <div class="field"><label>评价名称 / 范围</label><input type="text" placeholder="如：期末统考 / 模块测试" /></div>
+            <div class="field"><label>成绩分布与达标情况</label><textarea placeholder="分数段、优秀率、及格率"></textarea></div>
+            <div class="field"><label>试卷 / 任务质量分析</label><textarea placeholder="信度、难度、区分度、知识点覆盖"></textarea></div>
+            <div class="field"><label>归因与教学改进建议</label><textarea></textarea></div>
+          </div>
+          <div class="row"><button class="btn sm" onclick="printTemplate('tpl-rfsum')">打印 / 导出 PDF</button><button class="btn ghost sm" onclick="copyTemplate('tpl-rfsum')">复制内容</button></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 模块四：教育教学研究 ===== -->
+  <section class="section" id="mod-research">
+    <div class="section-head">
+      <span class="kicker">MODULE 04</span>
+      <h2>④ 教育教学研究</h2>
+      <p>教研记录、课题 / 论文框架、听评课。你的教研资料可在上传中心以「教育教学研究」类别归档，开通云端后由 AI 辅助梳理文献脉络与研究结论。</p>
+    </div>
+    <div class="module">
+      <div class="module-head"><div class="num">4</div><div><h3>教研模板</h3><div class="sub">教研记录 · 课题论文 · 听评课</div></div></div>
+      <div class="module-body">
+        <div class="tabs">
+          <div class="tab active" data-target="rs-log">教研记录</div>
+          <div class="tab" data-target="rs-paper">课题 / 论文框架</div>
+          <div class="tab" data-target="rs-observe">听评课</div>
+        </div>
+        <div class="panel active" id="rs-log">
+          <div id="tpl-rslog">
+            <div class="form-grid">
+              <div class="field"><label>教研主题</label><input type="text" /></div>
+              <div class="field"><label>时间 / 参与人</label><input type="text" /></div>
+            </div>
+            <div class="field"><label>研讨要点</label><textarea></textarea></div>
+            <div class="field"><label>共识与行动项</label><textarea placeholder="谁、做什么、何时"></textarea></div>
+          </div>
+          <div class="row"><button class="btn sm" onclick="printTemplate('tpl-rslog')">打印 / 导出 PDF</button><button class="btn ghost sm" onclick="copyTemplate('tpl-rslog')">复制内容</button></div>
+        </div>
+        <div class="panel" id="rs-paper">
+          <div id="tpl-rspaper">
+            <div class="field"><label>研究问题</label><textarea placeholder="清晰、可研究、有价值"></textarea></div>
+            <div class="field"><label>文献综述要点</label><textarea></textarea></div>
+            <div class="field"><label>研究方法</label><textarea placeholder="行动研究 / 实验 / 案例分析…"></textarea></div>
+            <div class="field"><label>预期成果与提纲</label><textarea placeholder="一、二、三…级标题框架"></textarea></div>
+          </div>
+          <div class="row"><button class="btn sm" onclick="printTemplate('tpl-rspaper')">打印 / 导出 PDF</button><button class="btn ghost sm" onclick="copyTemplate('tpl-rspaper')">复制内容</button></div>
+        </div>
+        <div class="panel" id="rs-observe">
+          <div id="tpl-rsobs">
+            <div class="form-grid">
+              <div class="field"><label>授课教师 / 课题</label><input type="text" /></div>
+              <div class="field"><label>观察焦点</label><input type="text" placeholder="如：提问质量" /></div>
+            </div>
+            <div class="field"><label>课堂观察记录</label><textarea></textarea></div>
+            <div class="field"><label>亮点与建议（建设性）</label><textarea></textarea></div>
+          </div>
+          <div class="row"><button class="btn sm" onclick="printTemplate('tpl-rsobs')">打印 / 导出 PDF</button><button class="btn ghost sm" onclick="copyTemplate('tpl-rsobs')">复制内容</button></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 模块五：班级与成绩分析 ===== -->
+  <section class="section" id="class">
+    <div class="section-head">
+      <span class="kicker">MODULE 05</span>
+      <h2>⑤ 班级与成绩分析</h2>
+      <p>轻量班级助手：维护学生名单（本机保存），录入成绩后自动统计均分、中位数、及格率、优秀率，并生成分数段分布图。</p>
+    </div>
+    <div class="module">
+      <div class="module-head"><div class="num">5</div><div><h3>学生名单与成绩分析</h3><div class="sub">名单本机保存 · 成绩一键统计</div></div></div>
+      <div class="module-body">
+        <div class="tabs">
+          <div class="tab active" data-target="cls-roster">学生名单</div>
+          <div class="tab" data-target="cls-grade">成绩分析</div>
+        </div>
+        <div class="panel active" id="cls-roster">
+          <div class="field"><label>添加学生（每行一个，或用逗号 / 顿号分隔）</label><textarea id="rosterInput" placeholder="张三&#10;李四&#10;王五"></textarea></div>
+          <div class="row"><button class="btn sm" id="rosterAdd" type="button">添加</button><span class="empty-hint" id="rosterMsg"></span></div>
+          <div class="field" style="margin-top:12px"><label>本班名单（<span id="rosterCount">0</span> 人）</label><div class="filelist" id="rosterList"></div></div>
+        </div>
+        <div class="panel" id="cls-grade">
+          <div class="field"><label>录入成绩（每行一个分数，或逗号分隔；可与名单人数不一致）</label><textarea id="gradeInput" placeholder="85&#10;92&#10;76&#10;68&#10;..."></textarea></div>
+          <div class="row"><button class="btn sm" id="gradeCalc" type="button">分析</button></div>
+          <div id="gradeResult" class="analysis" style="margin-top:14px;display:none">
+            <h4>📊 成绩统计</h4>
+            <div id="gradeStats" class="out" style="min-height:auto"></div>
+            <div id="gradeBars" style="margin-top:14px"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 模块六：听评课看板 & 学期日历 ===== -->
+  <section class="section" id="kanban">
+    <div class="section-head">
+      <span class="kicker">MODULE 06</span>
+      <h2>⑥ 听评课看板 & 学期日历</h2>
+      <p>用看板管理听课评课任务（待听课 → 已记录 → 已评课），用学期日历规划公开课、考试、教研与节假日。数据本机保存，云端开通后可同步。</p>
+    </div>
+    <div class="module">
+      <div class="module-head"><div class="num">6</div><div><h3>听评课看板</h3><div class="sub">新增听课 · 状态流转 · 本机保存</div></div></div>
+      <div class="module-body">
+        <div class="tabs">
+          <div class="tab active" data-target="kb-board">看板</div>
+          <div class="tab" data-target="kb-add">新增听课</div>
+          <div class="tab" data-target="kb-cal">学期日历</div>
+        </div>
+
+        <!-- 新增听课 -->
+        <div class="panel" id="kb-add">
+          <div class="form-grid">
+            <div class="field"><label>授课教师</label><input id="obTeacher" type="text" placeholder="如：李老师" /></div>
+            <div class="field"><label>课题</label><input id="obTopic" type="text" placeholder="如：洋流对地理环境的影响" /></div>
+            <div class="field"><label>班级</label><input id="obClass" type="text" placeholder="如：高一(3)班" /></div>
+            <div class="field"><label>日期</label><input id="obDate" type="date" /></div>
+          </div>
+          <div class="field"><label>观察焦点</label><input id="obFocus" type="text" placeholder="如：提问质量 / 学生活动设计 / 重难点突破" /></div>
+          <div class="row"><button class="btn sm" id="obAdd" type="button">添加到看板</button><span class="empty-hint" id="obMsg"></span></div>
+        </div>
+
+        <!-- 看板 -->
+        <div class="panel active" id="kb-board">
+          <div class="kb-week" id="kbWeek"></div>
+          <div class="kanban">
+            <div class="kb-col"><h4>待听课</h4><div class="kb-list" id="kb-todo"></div></div>
+            <div class="kb-col"><h4>已记录</h4><div class="kb-list" id="kb-logged"></div></div>
+            <div class="kb-col"><h4>已评课</h4><div class="kb-list" id="kb-reviewed"></div></div>
+          </div>
+        </div>
+
+        <!-- 学期日历 -->
+        <div class="panel" id="kb-cal">
+          <div class="cal-head">
+            <button class="btn ghost sm" id="calPrev" type="button">‹</button>
+            <span id="calTitle"></span>
+            <button class="btn ghost sm" id="calNext" type="button">›</button>
+          </div>
+          <div class="cal-grid" id="calGrid"></div>
+          <div class="cal-form">
+            <div class="form-grid">
+              <div class="field"><label>日期</label><input id="calDate" type="date" /></div>
+              <div class="field"><label>类型</label>
+                <select id="calType">
+                  <option>公开课</option><option>考试</option><option>教研</option><option>节假日</option><option>其他</option>
+                </select>
+              </div>
+            </div>
+            <div class="field"><label>标题</label><input id="calTitleIn" type="text" placeholder="如：期中统考 / 校级公开课" /></div>
+            <div class="field"><label>备注</label><textarea id="calNote" rows="2" placeholder="可选"></textarea></div>
+            <div class="row">
+              <button class="btn sm" id="calAdd" type="button">添加事件</button>
+              <button class="btn ghost sm" id="calClear" type="button">清除本月事件</button>
+            </div>
+            <div class="cal-legend">
+              <span><i style="background:#e08a3c"></i>公开课</span>
+              <span><i style="background:#c0492f"></i>考试</span>
+              <span><i style="background:#1f6f8b"></i>教研</span>
+              <span><i style="background:#2f9e6f"></i>节假日</span>
+              <span><i style="background:#8a94a6"></i>其他</span>
+            </div>
+          </div>
+          <div id="calEventList" style="margin-top:14px"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 上传 · 分析 · 汇总中心 ===== -->
+  <section class="section" id="hub">
+    <div class="section-head">
+      <span class="kicker">CLOUD HUB</span>
+      <h2>上传 · 分析 · 汇总中心</h2>
+      <p>为五类内容提供统一通道：<b>教学文档、课件、授课思路、灵感、教育教学研究</b>。选择类别后上传，开通云端后由大模型自动提取要点、生成改进建议与汇总报告。</p>
+    </div>
+    <div class="upload-hub">
+      <div>
+        <div class="field">
+          <label>内容类别</label>
+          <select id="contentType">
+            <option>教学文档</option>
+            <option>课件</option>
+            <option>授课思路</option>
+            <option>灵感</option>
+            <option>教育教学研究</option>
+          </select>
+        </div>
+        <div class="drop" id="drop">
+          <div class="big">⬆️</div>
+          <div><b>点击或拖拽上传</b></div>
+          <div class="empty-hint">支持文档、课件、图片等；云端开通后自动同步</div>
+          <input type="file" id="fileInput" multiple hidden />
+        </div>
+        <div class="filelist" id="fileList"></div>
+      </div>
+      <div>
+        <div class="analysis">
+          <h4>🤖 AI 分析 / 汇总</h4>
+          <div class="out" id="analysisOut">上传文件后，点击下方按钮。云端开通前会给出本地整理提示；开通后调用云端大模型自动分析。</div>
+          <div class="row" style="margin-top:12px">
+            <button class="btn sm" id="analyzeBtn">分析要点</button>
+            <button class="btn ghost sm" id="summarizeBtn">生成汇总</button>
+          </div>
+        </div>
+        <div class="inspire" style="margin-top:16px">
+          <h4 style="margin:0 0 8px">💡 灵感速记</h4>
+          <textarea id="inspireInput" placeholder="突然想到的教学点子、学生金句、改进灵感…"></textarea>
+          <div class="row" style="margin-top:10px">
+            <button class="btn sm" id="inspireSave">暂存灵感</button>
+            <span class="saved" id="inspireMsg"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 插图收藏 · 标签管理 -->
+    <div class="module" id="illLib" style="margin-top:22px">
+      <div class="module-head"><div class="num">🎨</div><div><h3>插图收藏 · 标签管理</h3><div class="sub">跨页同步：在「科普插图」页面点"收藏到工作台"即出现在此</div></div></div>
+      <div class="module-body">
+        <div class="row" id="illTags" style="margin-bottom:14px"></div>
+        <div class="grid grid-3" id="illGrid"></div>
+        <div id="illEmpty" class="empty-hint">还没有收藏的插图。去 <a href="science-illustration.html">科普插图生成器</a> 生成插图后，点"收藏到工作台"即可在这里按标签筛选与管理。</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 模板库 ===== -->
+  <section class="section" id="templates">
+    <div class="section-head">
+      <span class="kicker">TEMPLATE LIBRARY</span>
+      <h2>教学模板库</h2>
+      <p>精选可直接落地的模板，融合三套参考体系的设计哲学。点击卡片内按钮可打印或复制。</p>
+    </div>
+    <div class="grid grid-2">
+      <div class="template">
+        <div class="t-head"><h4>单元教学设计（UbD 逆向设计）</h4></div>
+        <div class="refline">参考：纽约高中 Understanding by Design · 清华附中大单元</div>
+        <ul><li>预期学习结果（持久理解 + 基本问题）</li><li>评估证据（表现性任务 + 其他证据）</li><li>学习计划 WHERETO</li><li>学科核心素养落点</li></ul>
+        <a class="more" href="#mod-prep" onclick="document.querySelector('#prep-unit').scrollIntoView()">在备课模块填写 →</a>
+      </div>
+      <div class="template">
+        <div class="t-head"><h4>PBL 项目式学习设计</h4></div>
+        <div class="refline">参考：北大附中 项目式学习 / 书院制</div>
+        <ul><li>驱动性问题 + 真实情境受众</li><li>学科知识整合地图</li><li>可公开呈现的成果</li><li>量规与评价方式</li></ul>
+        <a class="more" href="#mod-prep" onclick="document.querySelector('#prep-pbl').scrollIntoView()">在备课模块填写 →</a>
+      </div>
+      <div class="template">
+        <div class="t-head"><h4>课时教案（含差异化）</h4></div>
+        <div class="refline">通用 + 清华附中深度学习活动</div>
+        <ul><li>三维目标 / 重难点</li><li>教学过程（师—生—意图）</li><li>分层作业</li><li>反思预留位</li></ul>
+        <a class="more" href="#mod-prep" onclick="document.querySelector('#prep-lesson').scrollIntoView()">在备课模块填写 →</a>
+      </div>
+      <div class="template">
+        <div class="t-head"><h4>反思三层面套表</h4></div>
+        <div class="refline">改进 / 阶段性评价 / 总结性评价</div>
+        <ul><li>改进：亮点—不足—具体动作</li><li>阶段性：维度—数据—调整决策</li><li>总结性：分布—质量分析—归因</li></ul>
+        <a class="more" href="#mod-reflect">在反思模块填写 →</a>
+      </div>
+      <div class="template">
+        <div class="t-head"><h4>📚 教材资源包</h4></div>
+        <div class="refline">人教版 / 鲁教 / 湘教 / 中图 + 国外《科学发现者》</div>
+        <ul><li>按册·章·节拆解排序</li><li>四版对照，便于选案例</li><li>备课授课资源入口</li></ul>
+        <a class="more" href="textbooks.html">打开资源包 →</a>
+      </div>
+      <div class="template">
+        <div class="t-head"><h4>🛠 教学案生成器</h4></div>
+        <div class="refline">多版融合 · 教学案 + 导学案</div>
+        <ul><li>选主题与版本自动定位</li><li>生成教师教学案</li><li>生成学生导学案</li></ul>
+        <a class="more" href="lesson-planner.html">去生成 →</a>
+      </div>
+      <div class="template">
+        <div class="t-head"><h4>🎨 科普插图生成器</h4></div>
+        <div class="refline">主题 → 可动画 SVG 插图 + 构思</div>
+        <ul><li>选受众与风格</li><li>生成可动画 SVG 插图</li><li>中英双语出图提示词</li><li>一键收藏到工作台标签管理</li></ul>
+        <a class="more" href="science-illustration.html">去生成 →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 参考体系 ===== -->
+  <section class="section" id="refs">
+    <div class="section-head">
+      <span class="kicker">REFERENCE SYSTEM</span>
+      <h2>参考教育体系</h2>
+      <p>本工作台模板的设计依据。可在你的模板中标注对应学校的理念标签。</p>
+    </div>
+    <div class="grid grid-3">
+      <div class="refcard">
+        <div class="school">北大附中</div>
+        <h4>走班 · 单元 · PBL · 书院</h4>
+        <ul>
+          <li>选课走班 + 导师制，强调学生自主</li>
+          <li>以单元为单位整体设计，跨课时统筹</li>
+          <li>项目式学习（PBL）：真实问题驱动、长周期、成果公开</li>
+          <li>书院制提供多元成长场景</li>
+        </ul>
+      </div>
+      <div class="refcard">
+        <div class="school">清华附中</div>
+        <h4>核心素养 · 深度学习 · 大单元</h4>
+        <ul>
+          <li>以学科核心素养为导向设计目标</li>
+          <li>深度学习：高阶思维、迁移应用</li>
+          <li>大单元教学，结构化统整内容</li>
+          <li>注重情境创设与问题解决</li>
+        </ul>
+      </div>
+      <div class="refcard">
+        <div class="school">纽约高中（美式）</div>
+        <h4>UbD 逆向设计 · 档案袋评估</h4>
+        <ul>
+          <li>Understanding by Design：结果→评估→活动</li>
+          <li>形成性评价贯穿全程，及时调整</li>
+          <li>总结性评价重诊断与归因</li>
+          <li>Portfolio 档案袋：过程性证据集</li>
+        </ul>
+      </div>
+    </div>
+      <div class="note">提示：这些理念已内化到上方模板的字段设计中（如 UbD 三阶段、PBL 驱动性问题、反思三层面），你无需手动套用，直接填写即可。</div>
+
+    <div class="section-head" style="margin-top:40px">
+      <span class="kicker">EXTRA TEMPLATES</span>
+      <h2>补充模板（可直接填写）</h2>
+      <p>针对地理教学与常规教研细化的实用模板：学期进度、听课量规、学情分析、试题细目、研学活动。填完即可打印或复制，云端开通后可一键归档。</p>
+    </div>
+
+    <!-- 学期教学进度表 -->
+    <div class="module">
+      <div class="module-head"><div class="num">＋</div><div><h3>学期教学进度表</h3><div class="sub">可增减周次 · 可直接填写</div></div></div>
+      <div class="module-body">
+        <div id="tpl-semester">
+          <div class="form-grid">
+            <div class="field"><label>学期</label><input type="text" placeholder="如：2026 学年第一学期" /></div>
+            <div class="field"><label>年级 / 学科</label><input type="text" placeholder="高一 / 地理" /></div>
+            <div class="field"><label>教材版本</label><input type="text" placeholder="如：人教版 必修一" /></div>
+            <div class="field"><label>计划总课时</label><input type="text" placeholder="如：36" /></div>
+          </div>
+          <div class="field"><label>教学进度表</label>
+            <table class="tbl" id="semTable">
+              <thead><tr><th style="width:46px">周次</th><th>起止日期</th><th>教学内容（章节 / 主题）</th><th style="width:56px">课时</th><th>备注</th><th style="width:46px"></th></tr></thead>
+              <tbody>
+                <tr><td><input value="1" /></td><td><input placeholder="9.1–9.7" /></td><td><input placeholder="地球的宇宙环境" /></td><td><input placeholder="2" /></td><td><input /></td><td><button class="btn ghost sm" type="button" onclick="this.closest('tr').remove()">删</button></td></tr>
+                <tr><td><input value="2" /></td><td><input placeholder="9.8–9.14" /></td><td><input placeholder="太阳对地球的影响" /></td><td><input placeholder="2" /></td><td><input /></td><td><button class="btn ghost sm" type="button" onclick="this.closest('tr').remove()">删</button></td></tr>
+                <tr><td><input value="3" /></td><td><input placeholder="9.15–9.21" /></td><td><input placeholder="地球的历史" /></td><td><input placeholder="2" /></td><td><input /></td><td><button class="btn ghost sm" type="button" onclick="this.closest('tr').remove()">删</button></td></tr>
+              </tbody>
+            </table>
+            <button class="btn ghost sm" type="button" onclick="addSemesterRow()">＋ 添加周次</button>
+          </div>
+          <div class="form-grid">
+            <div class="field"><label>期中考查周</label><input type="text" placeholder="如：第 10 周" /></div>
+            <div class="field"><label>期末考查周</label><input type="text" placeholder="如：第 20 周" /></div>
+          </div>
+        </div>
+        <div class="row"><button class="btn sm" type="button" onclick="printTemplate('tpl-semester')">打印 / 导出 PDF</button><button class="btn ghost sm" type="button" onclick="copyTemplate('tpl-semester')">复制内容</button></div>
+      </div>
+    </div>
+
+    <!-- 听课评价量规 -->
+    <div class="module">
+      <div class="module-head"><div class="num">＋</div><div><h3>听课评价量规</h3><div class="sub">维度评分 · 可直接填写</div></div></div>
+      <div class="module-body">
+        <div id="tpl-rubric">
+          <div class="form-grid">
+            <div class="field"><label>授课教师</label><input type="text" /></div>
+            <div class="field"><label>学科 / 课题</label><input type="text" /></div>
+            <div class="field"><label>班级 / 听课人</label><input type="text" /></div>
+            <div class="field"><label>日期</label><input type="text" /></div>
+          </div>
+          <table class="tbl">
+            <thead><tr><th>评价维度</th><th style="width:70px">权重</th><th style="width:84px">评分(1–5)</th><th>观察要点 / 说明</th></tr></thead>
+            <tbody>
+              <tr><td>教学目标</td><td><input placeholder="15%" /></td><td><input type="number" min="1" max="5" /></td><td><input placeholder="明确、可测、素养导向" /></td></tr>
+              <tr><td>内容处理</td><td><input placeholder="20%" /></td><td><input type="number" min="1" max="5" /></td><td><input placeholder="重难点、逻辑、情境" /></td></tr>
+              <tr><td>教学过程</td><td><input placeholder="25%" /></td><td><input type="number" min="1" max="5" /></td><td><input placeholder="活动设计、探究性" /></td></tr>
+              <tr><td>学生参与</td><td><input placeholder="15%" /></td><td><input type="number" min="1" max="5" /></td><td><input placeholder="思维活跃、互动质量" /></td></tr>
+              <tr><td>重难点突破</td><td><input placeholder="10%" /></td><td><input type="number" min="1" max="5" /></td><td><input placeholder="是否有效突破" /></td></tr>
+              <tr><td>媒体 / 板书</td><td><input placeholder="5%" /></td><td><input type="number" min="1" max="5" /></td><td><input placeholder="地图、板图、PPT" /></td></tr>
+              <tr><td>整体效果</td><td><input placeholder="10%" /></td><td><input type="number" min="1" max="5" /></td><td><input placeholder="目标达成度" /></td></tr>
+            </tbody>
+          </table>
+          <div class="form-grid">
+            <div class="field"><label>总分 / 加权合计</label><input type="text" placeholder="可手动汇总" /></div>
+            <div class="field"><label>等第</label><input type="text" placeholder="优 / 良 / 中 / 合格" /></div>
+          </div>
+          <div class="field"><label>总体评语与改进建议</label><textarea></textarea></div>
+        </div>
+        <div class="row"><button class="btn sm" type="button" onclick="printTemplate('tpl-rubric')">打印 / 导出 PDF</button><button class="btn ghost sm" type="button" onclick="copyTemplate('tpl-rubric')">复制内容</button></div>
+      </div>
+    </div>
+
+    <!-- 学情分析表 -->
+    <div class="module">
+      <div class="module-head"><div class="num">＋</div><div><h3>学情分析表</h3><div class="sub">可直接填写</div></div></div>
+      <div class="module-body">
+        <div id="tpl-xueqing">
+          <div class="form-grid">
+            <div class="field"><label>班级</label><input type="text" /></div>
+            <div class="field"><label>人数 / 上次均分</label><input type="text" placeholder="45 人 / 78.5" /></div>
+          </div>
+          <div class="field"><label>知识基础与已有经验</label><textarea></textarea></div>
+          <div class="field"><label>学习兴趣与习惯</label><textarea></textarea></div>
+          <div class="field"><label>学习难点预判</label><textarea></textarea></div>
+          <div class="field"><label>分层支持策略</label><textarea placeholder="学优生拔高 / 学困生补基 / 整体支架"></textarea></div>
+        </div>
+        <div class="row"><button class="btn sm" type="button" onclick="printTemplate('tpl-xueqing')">打印 / 导出 PDF</button><button class="btn ghost sm" type="button" onclick="copyTemplate('tpl-xueqing')">复制内容</button></div>
+      </div>
+    </div>
+
+    <!-- 试题双向细目表 -->
+    <div class="module">
+      <div class="module-head"><div class="num">＋</div><div><h3>试题双向细目表</h3><div class="sub">用于总结性评价命题 · 可直接填写</div></div></div>
+      <div class="module-body">
+        <div id="tpl-blueprint">
+          <div class="form-grid">
+            <div class="field"><label>测验名称</label><input type="text" placeholder="如：必修一 期中" /></div>
+            <div class="field"><label>总分 / 时长</label><input type="text" placeholder="100 分 / 90 分钟" /></div>
+          </div>
+          <table class="tbl">
+            <thead><tr><th>知识点 / 能力</th><th>题型</th><th style="width:60px">分值</th><th style="width:60px">难度</th><th>预估区分度</th></tr></thead>
+            <tbody>
+              <tr><td><input placeholder="地球运动" /></td><td><input placeholder="选择题" /></td><td><input placeholder="6" /></td><td><input placeholder="中" /></td><td><input placeholder="0.4" /></td></tr>
+              <tr><td><input placeholder="大气环流" /></td><td><input placeholder="综合题" /></td><td><input placeholder="12" /></td><td><input placeholder="较难" /></td><td><input placeholder="0.5" /></td></tr>
+              <tr><td><input placeholder="区域认知" /></td><td><input placeholder="读图题" /></td><td><input placeholder="8" /></td><td><input placeholder="易" /></td><td><input placeholder="0.3" /></td></tr>
+            </tbody>
+          </table>
+          <div class="field"><label>命题说明（覆盖度 / 梯度）</label><textarea></textarea></div>
+        </div>
+        <div class="row"><button class="btn sm" type="button" onclick="printTemplate('tpl-blueprint')">打印 / 导出 PDF</button><button class="btn ghost sm" type="button" onclick="copyTemplate('tpl-blueprint')">复制内容</button></div>
+      </div>
+    </div>
+
+    <!-- 地理研学活动设计 -->
+    <div class="module">
+      <div class="module-head"><div class="num">＋</div><div><h3>地理研学活动设计</h3><div class="sub">呼应北大附中“研学” · 地理实践力</div></div></div>
+      <div class="module-body">
+        <div id="tpl-field">
+          <div class="form-grid">
+            <div class="field"><label>研学主题</label><input type="text" placeholder="如：城市河流水质与土地利用" /></div>
+            <div class="field"><label>地点 / 时长</label><input type="text" placeholder="本地滨河公园 / 半天" /></div>
+          </div>
+          <div class="field"><label>核心素养目标</label><textarea placeholder="人地协调观 · 综合思维 · 区域认知 · 地理实践力"></textarea></div>
+          <div class="field"><label>探究问题与任务</label><textarea placeholder="驱动性问题 + 分组任务 + 数据采集"></textarea></div>
+          <div class="field"><label>安全与物资准备</label><textarea></textarea></div>
+          <div class="field"><label>成果形式</label><textarea placeholder="报告 / 地图 / 展板 / 短视频"></textarea></div>
+        </div>
+        <div class="row"><button class="btn sm" type="button" onclick="printTemplate('tpl-field')">打印 / 导出 PDF</button><button class="btn ghost sm" type="button" onclick="copyTemplate('tpl-field')">复制内容</button></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div>硬糖的地理芝士 · 备课 / 授课 / 反思 / 教研 一体化专业空间</div>
+    <div>☁️ 云服务开通后自动启用云存储与 AI 分析 · 当前为本地预览版</div>
+  </div>
+</footer>
+
+<script src="assets/app.js"></script>
+<script>
+(function () {
+  function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  /* 学生名单（本机） */
+  var RKEY = 'tw_roster_v1';
+  function loadRoster(){ try { return JSON.parse(localStorage.getItem(RKEY) || '[]'); } catch(e){ return []; } }
+  function renderRoster(){
+    var r = loadRoster();
+    document.getElementById('rosterCount').textContent = r.length;
+    var box = document.getElementById('rosterList');
+    if (!r.length){ box.innerHTML = '<div class="empty-hint">还没有学生。添加后会保存在本机。</div>'; return; }
+    box.innerHTML = '';
+    r.forEach(function(n, i){
+      var el = document.createElement('div'); el.className = 'fileitem';
+      el.innerHTML = '<div class="fi-ic">🧑‍🎓</div><div class="fi-meta"><div class="fi-name">' + esc(n) + '</div></div><button class="btn ghost sm" type="button">移除</button>';
+      el.querySelector('button').onclick = function(){ var a = loadRoster(); a.splice(i,1); localStorage.setItem(RKEY, JSON.stringify(a)); renderRoster(); };
+      box.appendChild(el);
+    });
+  }
+  document.getElementById('rosterAdd').onclick = function(){
+    var raw = document.getElementById('rosterInput').value;
+    var names = raw.split(/[\n,，、]+/).map(function(s){ return s.trim(); }).filter(Boolean);
+    if (!names.length){ alert('请输入学生姓名。'); return; }
+    var a = loadRoster();
+    names.forEach(function(n){ if (a.indexOf(n) === -1) a.push(n); });
+    localStorage.setItem(RKEY, JSON.stringify(a));
+    document.getElementById('rosterInput').value = '';
+    document.getElementById('rosterMsg').textContent = '已添加 ' + names.length + ' 人。';
+    renderRoster();
+  };
+  renderRoster();
+
+  /* 成绩分析 */
+  document.getElementById('gradeCalc').onclick = function(){
+    var raw = document.getElementById('gradeInput').value;
+    var nums = raw.split(/[\n,，]+/).map(function(s){ return parseFloat(s.trim()); }).filter(function(x){ return !isNaN(x); });
+    if (!nums.length){ alert('请输入成绩数字。'); return; }
+    var n = nums.length, sum = nums.reduce(function(a,b){ return a+b; }, 0), avg = sum / n;
+    var max = Math.max.apply(null, nums), min = Math.min.apply(null, nums);
+    var sorted = nums.slice().sort(function(a,b){ return a-b; });
+    var mid = n % 2 ? sorted[(n-1)/2] : (sorted[n/2-1] + sorted[n/2]) / 2;
+    var pass = nums.filter(function(x){ return x >= 60; }).length;
+    var exc = nums.filter(function(x){ return x >= 85; }).length;
+    document.getElementById('gradeStats').innerHTML =
+      '人数：' + n + '　平均：' + avg.toFixed(1) + '　中位：' + mid.toFixed(1) + '<br>' +
+      '最高：' + max + '　最低：' + min + '<br>' +
+      '及格率(≥60)：' + (pass/n*100).toFixed(1) + '%　优秀率(≥85)：' + (exc/n*100).toFixed(1) + '%';
+    var buckets = [['0–59',0],['60–69',0],['70–79',0],['80–89',0],['90–100',0]];
+    nums.forEach(function(x){ var i; if (x<60) i=0; else if (x<70) i=1; else if (x<80) i=2; else if (x<90) i=3; else i=4; buckets[i][1]++; });
+    var maxB = Math.max.apply(null, buckets.map(function(b){ return b[1]; }).concat([1]));
+    var bars = '<div style="font-weight:600;margin-bottom:4px">分数段分布</div>';
+    buckets.forEach(function(b){
+      var w = b[1] / maxB * 100;
+      bars += '<div style="display:flex;align-items:center;gap:8px;margin:6px 0">' +
+        '<div style="width:56px;font-size:13px;color:#51607a">' + b[0] + '</div>' +
+        '<div style="flex:1;background:#eef3f9;border-radius:6px;height:18px"><div style="width:' + w + '%;background:#1f6f8b;height:100%;border-radius:6px"></div></div>' +
+        '<div style="width:28px;font-size:13px">' + b[1] + '</div></div>';
+    });
+    document.getElementById('gradeBars').innerHTML = bars;
+    document.getElementById('gradeResult').style.display = 'block';
+  };
+
+  /* ---------- 7. 插图收藏 · 标签管理（跨页共享 localStorage） ---------- */
+  (function () {
+    const lib = window.IllustrationLibrary;
+    if (!lib) return;
+    function renderIllLib() {
+      const all = lib.load();
+      const grid = document.getElementById('illGrid');
+      const tagsBox = document.getElementById('illTags');
+      const empty = document.getElementById('illEmpty');
+      if (!grid) return;
+      const activeTag = window.__illTagFilter || null;
+      const tags = lib.allTags();
+      tagsBox.innerHTML = '<span class="tag' + (activeTag ? '' : ' ref') + '" style="cursor:pointer" data-tag="">全部 (' + all.length + ')</span>'
+        + tags.map(t => '<span class="tag' + (activeTag === t ? ' ref' : '') + '" style="cursor:pointer" data-tag="' + esc(t) + '">' + esc(t) + '</span>').join('');
+      tagsBox.querySelectorAll('[data-tag]').forEach(el => el.onclick = () => { window.__illTagFilter = el.getAttribute('data-tag') || null; renderIllLib(); });
+      const list = activeTag ? all.filter(it => (it.tags || []).indexOf(activeTag) >= 0) : all;
+      empty.style.display = all.length ? 'none' : 'block';
+      grid.innerHTML = '';
+      list.forEach(it => {
+        const c = document.createElement('div'); c.className = 'card'; c.style.padding = '14px';
+        c.innerHTML = '<div class="ill-thumb">' + it.svg + '</div>'
+          + '<h3 style="margin:10px 0 6px;font-size:16px">' + esc(it.topic) + '</h3>'
+          + '<div class="ill-tags">' + (it.tags || []).map(t => '<span class="tag" data-rm="' + esc(t) + '">' + esc(t) + ' <b style="cursor:pointer">×</b></span>').join('') + '</div>'
+          + '<div class="row" style="margin-top:10px"><button class="btn ghost sm" data-add>＋标签</button><button class="btn ghost sm" data-del>删除</button></div>';
+        c.querySelectorAll('[data-rm]').forEach(x => x.querySelector('b').onclick = () => { const t = x.getAttribute('data-rm'); lib.setTags(it.id, (it.tags || []).filter(z => z !== t)); renderIllLib(); });
+        c.querySelector('[data-add]').onclick = () => {
+          const v = prompt('输入标签（逗号或空格分隔）：', (it.tags || []).join(' '));
+          if (v === null) return;
+          const nt = v.split(/[\s,，、]+/).map(s => s.trim()).filter(Boolean);
+          const set = new Set(it.tags || []); nt.forEach(t => set.add(t));
+          lib.setTags(it.id, Array.from(set)); renderIllLib();
+        };
+        c.querySelector('[data-del]').onclick = () => { if (confirm('确定删除「' + it.topic + '」这张插图？')) { lib.remove(it.id); renderIllLib(); } };
+        grid.appendChild(c);
+      });
+    }
+    renderIllLib();
+  })();
+
+  /* ---------- 8. 听评课看板 ---------- */
+  var OBKEY = 'tw_observe_v1';
+  function loadObs() { try { return JSON.parse(localStorage.getItem(OBKEY) || '[]'); } catch (e) { return []; } }
+  function saveObs(l) { localStorage.setItem(OBKEY, JSON.stringify(l)); }
+  var OB_STAT = { todo: '待听课', logged: '已记录', reviewed: '已评课' };
+  function renderBoard() {
+    var l = loadObs();
+    ['todo', 'logged', 'reviewed'].forEach(function (st) {
+      var box = document.getElementById('kb-' + st); if (!box) return; box.innerHTML = '';
+      l.filter(function (it) { return it.status === st; }).forEach(function (it) { box.appendChild(obCard(it)); });
+      if (!box.children.length) box.innerHTML = '<div class="empty-hint">暂无</div>';
+    });
+    renderWeek();
+  }
+  /* ---------- 8b. 本周待听课汇总 ---------- */
+  function obsDate(d) {
+    if (!d) return null;
+    var p = String(d).split('-');
+    if (p.length < 3) return null;
+    var x = new Date(+p[0], +p[1] - 1, +p[2]);
+    return isNaN(x.getTime()) ? null : x;
+  }
+  function obsKey(d) {
+    return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+  }
+  var WD = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
+  function renderWeek() {
+    var box = document.getElementById('kbWeek'); if (!box) return;
+    var l = loadObs();
+    var today = new Date(); today.setHours(0, 0, 0, 0);
+    // 本周（周一 → 周日）
+    var monday = new Date(today); monday.setDate(today.getDate() - ((today.getDay() + 6) % 7));
+    var sunday = new Date(monday); sunday.setDate(monday.getDate() + 6);
+    var tk = obsKey(today), mk = obsKey(monday), sk = obsKey(sunday);
+    var pending = l.filter(function (it) { return it.status === 'todo'; });
+    var overdue = pending.filter(function (it) { var d = obsDate(it.date); return d && obsKey(d) < tk; });
+    var inWeek = pending.filter(function (it) { var d = obsDate(it.date); return d && obsKey(d) >= mk && obsKey(d) <= sk; });
+    var noDate = pending.filter(function (it) { return !obsDate(it.date); });
+    var done = l.filter(function (it) { return it.status === 'reviewed'; });
+    var list = overdue.concat(inWeek).concat(noDate);
+    var html = '<div class="kw-head"><b>📌 本周待听课</b><span class="kw-range">' + mk + ' ~ ' + sk + '</span></div>';
+    html += '<div class="kw-stats">'
+      + '<span class="kw-stat"><i>待听课</i><b>' + pending.length + '</b></span>'
+      + '<span class="kw-stat' + (overdue.length ? ' warn' : '') + '"><i>已逾期</i><b>' + overdue.length + '</b></span>'
+      + '<span class="kw-stat"><i>本周内</i><b>' + inWeek.length + '</b></span>'
+      + '<span class="kw-stat"><i>未排期</i><b>' + noDate.length + '</b></span>'
+      + '<span class="kw-stat"><i>已评课</i><b>' + done.length + '</b></span></div>';
+    if (!list.length) {
+      html += '<div class="empty-hint">本周暂无待听课安排。可在「新增听课」中录入，或等待日历上的公开课计划。</div>';
+    } else {
+      html += '<div class="kw-list">' + list.map(function (it) {
+        var d = obsDate(it.date);
+        var isOver = d && obsKey(d) < tk;
+        var badge = d
+          ? '<div class="kw-date' + (isOver ? ' overdue' : '') + '"><b>' + d.getDate() + '</b><span>' + WD[d.getDay()] + '</span></div>'
+          : '<div class="kw-date none"><b>—</b><span>未排期</span></div>';
+        return '<div class="kw-item' + (isOver ? ' overdue' : '') + '">' + badge
+          + '<div class="kw-body"><b>' + esc(it.topic || '未命名') + '</b>'
+          + '<div class="kw-meta">' + esc(it.teacher || '') + (it.cls ? ' · ' + esc(it.cls) : '') + (it.date ? ' · ' + it.date : '') + '</div>'
+          + (it.focus ? '<div class="kw-focus">观察焦点：' + esc(it.focus) + '</div>' : '')
+          + '</div>'
+          + (isOver ? '<span class="kw-tag">已逾期</span>' : '') + '</div>';
+      }).join('') + '</div>';
+    }
+    box.innerHTML = html;
+  }
+  function obCard(it) {
+    var el = document.createElement('div'); el.className = 'kb-card';
+    var pillCls = it.status === 'reviewed' ? 'done' : (it.status === 'logged' ? 'pending' : '');
+    var advLabel = it.status === 'todo' ? '▶ 标记已记录' : (it.status === 'logged' ? '▶ 标记已评课' : '✓ 已完成');
+    el.innerHTML =
+      '<div class="kb-card-top"><b>' + esc(it.topic || '未命名') + '</b><span class="pill ' + pillCls + '">' + OB_STAT[it.status] + '</span></div>'
+      + '<div class="kb-meta">' + esc(it.teacher || '') + ' · ' + esc(it.cls || '') + ' · ' + (it.date || '') + '</div>'
+      + (it.focus ? '<div class="kb-focus">焦点：' + esc(it.focus) + '</div>' : '')
+      + '<textarea class="kb-note" placeholder="评课意见 / 备注">' + esc(it.note || '') + '</textarea>'
+      + '<div class="row" style="margin-top:8px"><button class="btn ghost sm" data-adv>' + advLabel + '</button><button class="btn ghost sm" data-del>删除</button></div>';
+    el.querySelector('.kb-note').addEventListener('change', function () {
+      var a = loadObs(); var x = a.find(function (z) { return z.id === it.id; }); if (x) { x.note = this.value; saveObs(a); }
+    });
+    el.querySelector('[data-adv]').onclick = function () {
+      var a = loadObs(); var x = a.find(function (z) { return z.id === it.id; }); if (!x) return;
+      x.status = x.status === 'todo' ? 'logged' : 'reviewed'; saveObs(a); renderBoard();
+    };
+    el.querySelector('[data-del]').onclick = function () {
+      if (confirm('删除这条听课记录？')) { saveObs(loadObs().filter(function (z) { return z.id !== it.id; })); renderBoard(); }
+    };
+    return el;
+  }
+  var obAdd = document.getElementById('obAdd');
+  if (obAdd) obAdd.onclick = function () {
+    var teacher = document.getElementById('obTeacher').value.trim();
+    var topic = document.getElementById('obTopic').value.trim();
+    if (!teacher || !topic) { alert('请填写授课教师与课题。'); return; }
+    var a = loadObs();
+    a.unshift({ id: 'ob_' + Date.now(), teacher: teacher, topic: topic, cls: document.getElementById('obClass').value.trim(), date: document.getElementById('obDate').value, focus: document.getElementById('obFocus').value.trim(), status: 'todo', note: '' });
+    saveObs(a);
+    document.getElementById('obMsg').textContent = '已添加到「待听课」。';
+    ['obTeacher', 'obTopic', 'obClass', 'obFocus'].forEach(function (id) { document.getElementById(id).value = ''; });
+    renderBoard();
+  };
+  renderBoard();
+
+  /* ---------- 9. 学期日历 ---------- */
+  var CALKEY = 'tw_calendar_v1';
+  function loadCal() { try { return JSON.parse(localStorage.getItem(CALKEY) || '[]'); } catch (e) { return []; } }
+  function saveCal(l) { localStorage.setItem(CALKEY, JSON.stringify(l)); }
+  var CALTYPES = { '公开课': '#e08a3c', '考试': '#c0492f', '教研': '#1f6f8b', '节假日': '#2f9e6f', '其他': '#8a94a6' };
+  var now0 = new Date();
+  var calYM = { y: now0.getFullYear(), m: now0.getMonth() };
+  function ymd(y, m, d) { return y + '-' + String(m + 1).padStart(2, '0') + '-' + String(d).padStart(2, '0'); }
+  function renderCal() {
+    var y = calYM.y, m = calYM.m;
+    var titleEl = document.getElementById('calTitle'); if (titleEl) titleEl.textContent = y + '年 ' + (m + 1) + '月';
+    var first = new Date(y, m, 1); var startDow = (first.getDay() + 6) % 7;
+    var days = new Date(y, m + 1, 0).getDate();
+    var prevDays = new Date(y, m, 0).getDate();
+    var grid = document.getElementById('calGrid'); if (!grid) return;
+    grid.innerHTML = '';
+    ['一', '二', '三', '四', '五', '六', '日'].forEach(function (d) { var c = document.createElement('div'); c.className = 'cal-dow'; c.textContent = d; grid.appendChild(c); });
+    for (var i = 0; i < startDow; i++) { var pc = document.createElement('div'); pc.className = 'cal-cell other'; pc.innerHTML = '<div class="cal-num">' + (prevDays - startDow + 1 + i) + '</div>'; grid.appendChild(pc); }
+    var today = new Date(); var events = loadCal();
+    for (var d = 1; d <= days; d++) {
+      var dateStr = ymd(y, m, d);
+      var cell = document.createElement('div'); cell.className = 'cal-cell'; cell.setAttribute('data-date', dateStr);
+      if (today.getFullYear() === y && today.getMonth() === m && today.getDate() === d) cell.className += ' today';
+      var evs = events.filter(function (e) { return e.date === dateStr; });
+      var dots = evs.map(function (e) { return '<span class="cal-dot" style="background:' + (CALTYPES[e.type] || '#8a94a6') + '"></span>'; }).join('');
+      cell.innerHTML = '<div class="cal-num">' + d + '</div><div class="cal-dots">' + dots + '</div>';
+      cell.onclick = (function (ds) { return function () { var di = document.getElementById('calDate'); if (di) { di.value = ds; di.scrollIntoView({ behavior: 'smooth' }); } }; })(dateStr);
+      grid.appendChild(cell);
+    }
+    var total = startDow + days; var trail = (7 - (total % 7)) % 7;
+    for (var k = 1; k <= trail; k++) { var tc = document.createElement('div'); tc.className = 'cal-cell other'; tc.innerHTML = '<div class="cal-num">' + k + '</div>'; grid.appendChild(tc); }
+    renderCalList();
+  }
+  function renderCalList() {
+    var y = calYM.y, m = calYM.m;
+    var events = loadCal().filter(function (e) { var p = e.date.split('-'); return (+p[0] === y && (+p[1] - 1) === m); }).sort(function (a, b) { return a.date < b.date ? -1 : 1; });
+    var box = document.getElementById('calEventList'); if (!box) return;
+    if (!events.length) { box.innerHTML = '<div class="empty-hint">本月暂无事件。可在上方添加公开课 / 考试 / 教研 / 节假日。</div>'; return; }
+    box.innerHTML = '<h4 style="margin:0 0 8px">📅 本月事件（' + events.length + '）</h4>' + events.map(function (e) {
+      return '<div class="fileitem" style="margin-bottom:8px"><div class="fi-ic" style="background:' + (CALTYPES[e.type] || '#8a94a6') + '22;color:' + (CALTYPES[e.type] || '#8a94a6') + '">●</div>'
+        + '<div class="fi-meta"><div class="fi-name">' + esc(e.title || '(无标题)') + '</div><div class="fi-sub">' + e.date + ' · ' + esc(e.type) + (e.note ? ' · ' + esc(e.note) : '') + '</div></div>'
+        + '<button class="btn ghost sm" data-del="' + e.id + '">删除</button></div>';
+    }).join('');
+    box.querySelectorAll('[data-del]').forEach(function (b) { b.onclick = function () { saveCal(loadCal().filter(function (x) { return x.id !== b.getAttribute('data-del'); })); renderCal(); }; });
+  }
+  var calPrev = document.getElementById('calPrev'); if (calPrev) calPrev.onclick = function () { calYM.m--; if (calYM.m < 0) { calYM.m = 11; calYM.y--; } renderCal(); };
+  var calNext = document.getElementById('calNext'); if (calNext) calNext.onclick = function () { calYM.m++; if (calYM.m > 11) { calYM.m = 0; calYM.y++; } renderCal(); };
+  var calAdd = document.getElementById('calAdd'); if (calAdd) calAdd.onclick = function () {
+    var date = document.getElementById('calDate').value; var type = document.getElementById('calType').value; var title = document.getElementById('calTitleIn').value.trim();
+    if (!date || !title) { alert('请填写日期与标题。'); return; }
+    var a = loadCal(); a.push({ id: 'cal_' + Date.now(), date: date, type: type, title: title, note: document.getElementById('calNote').value.trim() }); saveCal(a);
+    document.getElementById('calTitleIn').value = ''; document.getElementById('calNote').value = ''; renderCal();
+  };
+  var calClear = document.getElementById('calClear'); if (calClear) calClear.onclick = function () {
+    if (confirm('清除本月全部事件？')) { var y = calYM.y, m = calYM.m; saveCal(loadCal().filter(function (e) { var p = e.date.split('-'); return !(+p[0] === y && (+p[1] - 1) === m); })); renderCal(); }
+  };
+  renderCal();
+})();
+</script>
+</body>
+</html>

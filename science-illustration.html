@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>科普插图生成器 · 硬糖的地理芝士</title>
+<link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+
+<!-- ===== 顶栏 ===== -->
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="brand"><span class="logo">地</span> 硬糖的地理芝士</div>
+    <nav class="toc">
+      <a href="index.html" class="backlink">← 工作台</a>
+      <a href="#input">输入主题</a>
+      <a href="#result">SVG 插图</a>
+      <a href="#presets">预设库</a>
+      <a href="#gallery">实时画廊</a>
+    </nav>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="hero-inner">
+    <h1>科普插图生成器</h1>
+    <p>给定地理主题，浏览器内直接生成<b>可动画的 SVG 矢量插图</b>（线条 + 图形 + 配色 + 动效），完全离线、不消耗图像额度。覆盖小学到公众各学段，可直接下载 <code>.svg</code> 放进课件。</p>
+    <div class="cloud-banner">
+      <span>🎨</span>
+      <div><b>关于"真实像素图"：</b>本页默认用 SVG 出图（免额度、可无限改）。若某张确实需要照片级渲染，可展开"提示词"复制去图像模型——默认不自动消耗额度。</div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ===== 输入 ===== -->
+  <section class="section" id="input">
+    <div class="section-head">
+      <span class="kicker">STEP 1</span>
+      <h2>输入主题与要求</h2>
+      <p>填写科普主题，选受众与风格，可补充强调要点，然后点"生成 SVG 插图"。</p>
+    </div>
+    <div class="module">
+      <div class="module-body">
+        <div class="field"><label>科普主题</label><input id="topic" type="text" placeholder="如：水循环 / 大气环流 / 板块构造 / 城市热岛" /></div>
+        <div class="form-grid">
+          <div class="field">
+            <label>受众</label>
+            <select id="audience">
+              <option>小学生</option>
+              <option>初中生</option>
+              <option>高中生</option>
+              <option>公众科普</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>风格</label>
+            <select id="styleSel">
+              <option>卡通扁平</option>
+              <option>手绘水彩</option>
+              <option>信息图</option>
+              <option>写实</option>
+            </select>
+          </div>
+        </div>
+        <div class="field"><label>想强调的要点（可选）</label><input id="emph" type="text" placeholder="如：突出蒸发—降水—径流的过程箭头" /></div>
+        <div class="row" style="margin-top:6px">
+          <button class="btn" id="genBtn" type="button">🎨 生成 SVG 插图</button>
+          <span class="empty-hint" id="genHint">生成后可直接下载 SVG，或展开提示词去出像素图。</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 结果 ===== -->
+  <section class="section" id="result">
+    <div class="section-head">
+      <span class="kicker">STEP 2</span>
+      <h2>SVG 插图</h2>
+      <p>下方为浏览器内实时渲染的矢量插图，可下载 <code>.svg</code> 文件直接使用；"提示词"为可选，仅在需要照片级像素图时展开。</p>
+    </div>
+    <div class="module">
+      <div class="module-body">
+        <div id="resultBox"><div class="empty-hint">↑ 填写主题后点生成，这里会出现可动画的 SVG 插图。</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 预设库 ===== -->
+  <section class="section" id="presets">
+    <div class="section-head">
+      <span class="kicker">PRESETS</span>
+      <h2>常见地理主题预设</h2>
+      <p>点"生成"可把该主题载入并直接画出 SVG 插图；也可先"填入"再微调。</p>
+    </div>
+    <div class="grid grid-2" id="presetGrid"></div>
+  </section>
+
+  <!-- ===== 实时画廊 ===== -->
+  <section class="section" id="gallery">
+    <div class="section-head">
+      <span class="kicker">GALLERY</span>
+      <h2>实时 SVG 画廊</h2>
+      <p>以下为内置主题的矢量插图，全部在本页实时渲染并带动画，零额度消耗。点"下载"可取走对应 <code>.svg</code>。</p>
+    </div>
+    <div class="grid grid-3" id="galleryBox"></div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div>硬糖的地理芝士 · 科普插图生成器（SVG 矢量优先）</div>
+    <div><a href="index.html">← 工作台</a> · 内置插图免额度 · 真实像素图约 5–10 额度/张</div>
+  </div>
+</footer>
+
+<script src="assets/app.js"></script>
+<script>
+/* ---------- 通用箭头 ---------- */
+function arrow(x1, y1, x2, y2, color, w) {
+  const a = Math.atan2(y2 - y1, x2 - x1), s = 11;
+  const x3 = x2 - s * Math.cos(a - 0.42), y3 = y2 - s * Math.sin(a - 0.42);
+  const x4 = x2 - s * Math.cos(a + 0.42), y4 = y2 - s * Math.sin(a + 0.42);
+  return '<line x1="' + x1 + '" y1="' + y1 + '" x2="' + x2 + '" y2="' + y2 + '" stroke="' + color + '" stroke-width="' + (w || 3) + '" stroke-linecap="round"/>'
+    + '<polygon points="' + x2 + ',' + y2 + ' ' + x3 + ',' + y3 + ' ' + x4 + ',' + y4 + '" fill="' + color + '"/>';
+}
+
+/* ---------- 水循环 ---------- */
+function svgWater() {
+  return '<svg viewBox="0 0 800 460" class="ill" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="水循环示意图">'
+    + '<defs><linearGradient id="wc-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#eaf6ff"/><stop offset="1" stop-color="#d3ecfd"/></linearGradient></defs>'
+    + '<rect width="800" height="460" fill="url(#wc-sky)"/>'
+    + '<g class="spin" style="transform-origin:95px 85px"><circle cx="95" cy="85" r="34" fill="#ffd23f" stroke="#f4b400" stroke-width="2"/>'
+    + '<g stroke="#f4b400" stroke-width="3" stroke-linecap="round">'
+    + '<line x1="95" y1="33" x2="95" y2="18"/><line x1="95" y1="137" x2="95" y2="152"/><line x1="43" y1="85" x2="28" y2="85"/><line x1="147" y1="85" x2="162" y2="85"/>'
+    + '<line x1="58" y1="48" x2="48" y2="38"/><line x1="132" y1="122" x2="142" y2="132"/><line x1="132" y1="48" x2="142" y2="38"/><line x1="58" y1="122" x2="48" y2="132"/></g></g>'
+    + '<line x1="0" y1="360" x2="800" y2="360" stroke="#7c8a6a" stroke-width="2"/>'
+    + '<path d="M0 360 L120 235 L240 360 Z" fill="#d7e0cc" stroke="#8aa17a" stroke-width="2"/>'
+    + '<path d="M150 360 L255 270 L360 360 Z" fill="#e3ebd9" stroke="#8aa17a" stroke-width="2"/>'
+    + '<path d="M205 300 L255 270 L300 300 L255 312 Z" fill="#fff" stroke="#9bb08a" stroke-width="1.5"/>'
+    + '<path d="M380 360 Q560 343 800 360 L800 460 L380 460 Z" fill="#8fd0ec" stroke="#3b9ec9" stroke-width="2"/>'
+    + '<g fill="#ffffff" stroke="#b9c4cc" stroke-width="2"><ellipse cx="430" cy="150" rx="72" ry="34"/><ellipse cx="505" cy="138" rx="54" ry="28"/><ellipse cx="368" cy="158" rx="44" ry="24"/></g>'
+    + '<g stroke="#3fa3e0" stroke-width="3" stroke-linecap="round">'
+    + '<line class="rain" x1="400" y1="188" x2="395" y2="214"/><line class="rain" x1="440" y1="190" x2="435" y2="216" style="animation-delay:.3s"/>'
+    + '<line class="rain" x1="480" y1="186" x2="475" y2="212" style="animation-delay:.6s"/><line class="rain" x1="520" y1="190" x2="515" y2="216" style="animation-delay:.9s"/>'
+    + '<line class="rain" x1="370" y1="192" x2="365" y2="218" style="animation-delay:.45s"/></g>'
+    + '<g fill="#5bb0e0"><circle class="evap" cx="560" cy="350" r="5"/><circle class="evap" cx="620" cy="352" r="5" style="animation-delay:.8s"/>'
+    + '<circle class="evap" cx="680" cy="350" r="5" style="animation-delay:1.6s"/><circle class="evap" cx="500" cy="350" r="5" style="animation-delay:2.2s"/></g>'
+    + '<path d="M255 312 C320 360 360 350 430 360 C520 372 600 360 720 360" fill="none" stroke="#3fa3e0" stroke-width="7" stroke-linecap="round" opacity=".8"/>'
+    + arrow(560, 300, 560, 205, '#2f8fcf', 3) + arrow(430, 212, 430, 300, '#2f8fcf', 3) + arrow(300, 322, 430, 352, '#2f8fcf', 3)
+    + '<text class="lbl" x="600" y="182">蒸发</text><text class="lbl" x="452" y="255">降水</text><text class="lbl" x="300" y="345">径流</text>'
+    + '<text class="lbl" x="560" y="425">海洋</text><text class="lbl" x="110" y="350">山地</text><text class="lbl" x="430" y="118" text-anchor="middle">云</text>'
+    + '</svg>';
+}
+
+/* ---------- 大气环流（三圈） ---------- */
+function airCells() {
+  let g = '';
+  // 垂直列：上升/下沉
+  g += arrow(400, 388, 400, 158, '#e0552b', 4);   // 赤道上升
+  g += arrow(520, 158, 520, 388, '#3b7dd8', 4);   // 30N 下沉
+  g += arrow(640, 388, 640, 158, '#e0552b', 4);   // 60N 上升
+  g += arrow(760, 158, 760, 388, '#3b7dd8', 4);   // 极地下沉
+  // 地面风
+  g += '<g class="flow">' + arrow(512, 384, 422, 384, '#2f8fcf', 3) + '</g>'; // 信风（向赤道）
+  g += '<g class="flow">' + arrow(532, 384, 632, 384, '#2f8fcf', 3) + '</g>'; // 西风（向极）
+  g += '<g class="flow">' + arrow(752, 384, 662, 384, '#2f8fcf', 3) + '</g>'; // 极地东风（向赤道）
+  // 高空回流（相反）
+  g += '<g class="flow">' + arrow(422, 162, 512, 162, '#2f8fcf', 3) + '</g>';
+  g += '<g class="flow">' + arrow(632, 162, 532, 162, '#2f8fcf', 3) + '</g>';
+  g += '<g class="flow">' + arrow(662, 162, 752, 162, '#2f8fcf', 3) + '</g>';
+  return g;
+}
+function svgAir() {
+  let s = '<svg viewBox="0 0 800 460" class="ill" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="大气环流三圈示意图">'
+    + '<rect width="800" height="460" fill="#f4fafe"/>'
+    + '<path d="M30 400 Q400 366 770 400" fill="none" stroke="#caa46a" stroke-width="6"/>'
+    + '<line x1="400" y1="120" x2="400" y2="402" stroke="#e0552b" stroke-width="2" stroke-dasharray="5 5"/>';
+  // 北半球（右侧）
+  s += '<g>' + airCells() + '</g>';
+  // 南半球（镜像，不含文字）
+  s += '<g transform="translate(800,0) scale(-1,1)">' + airCells() + '</g>';
+  // 标签（仅右侧）
+  s += '<text class="lbl" x="400" y="424" text-anchor="middle">赤道低压</text>'
+    + '<text class="lbl" x="520" y="424" text-anchor="middle">副高</text>'
+    + '<text class="lbl" x="640" y="424" text-anchor="middle">副极地低压</text>'
+    + '<text class="lbl" x="760" y="424" text-anchor="middle">极地高压</text>'
+    + '<text class="lbl-s" x="460" y="372">信风</text><text class="lbl-s" x="566" y="372">西风</text><text class="lbl-s" x="694" y="372">极地东风</text>'
+    + '<text class="lbl-s" x="400" y="142" text-anchor="middle">上升</text><text class="lbl-s" x="520" y="150" text-anchor="middle">下沉</text>'
+    + '<text class="lbl-s" x="640" y="142" text-anchor="middle">上升</text>'
+    + '<text class="lbl-s" x="780" y="200">90°N</text><text class="lbl-s" x="660" y="200">60°N</text><text class="lbl-s" x="540" y="200">30°N</text>'
+    + '<text class="lbl-s" x="400" y="110" text-anchor="middle">（南北半球对称）</text>'
+    + '</svg>';
+  return s;
+}
+
+/* ---------- 板块构造 ---------- */
+function svgPlates() {
+  return '<svg viewBox="0 0 800 460" class="ill" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="板块构造示意图">'
+    + '<rect width="800" height="460" fill="#fff"/>'
+    + '<rect x="0" y="210" width="800" height="250" fill="#f6b26b" opacity=".18"/>'
+    // 地幔对流
+    + '<g class="flow">' + arrow(150, 400, 150, 250, '#e08a3c', 3) + arrow(250, 250, 250, 400, '#e08a3c', 3)
+    + arrow(550, 400, 550, 250, '#e08a3c', 3) + arrow(650, 250, 650, 400, '#e08a3c', 3) + '</g>'
+    // 岩石圈（地壳）
+    + '<rect x="0" y="196" width="800" height="16" fill="#8d6e63"/>'
+    // 离散边界（海岭）x=150
+    + '<g class="flow">' + arrow(120, 188, 70, 188, '#2f8fcf', 3) + arrow(180, 188, 230, 188, '#2f8fcf', 3) + '</g>'
+    + '<path d="M150 196 L150 152" stroke="#e0552b" stroke-width="4"/>'
+    + '<polygon points="150,150 144,164 156,164" fill="#e0552b"/>'
+    // 汇聚边界（俯冲）x=430
+    + '<path d="M300 196 L430 196 L500 300 L430 196 Z" fill="#b08968" stroke="#6d4c41" stroke-width="2"/>'
+    + '<g class="flow">' + arrow(360, 188, 420, 200, '#2f8fcf', 3) + '</g>'
+    + '<polygon points="520,196 506,176 534,176" fill="#7a4a2b"/>' // 火山
+    + '<path d="M520 176 L520 158" stroke="#e0552b" stroke-width="3"/>'
+    + '<text x="520" y="150" text-anchor="middle" font-size="14">💥</text>'
+    + '<g fill="#e0552b">' + star(470, 230) + star(485, 255) + star(455, 270) + '</g>' // 地震
+    // 转换边界 x=650
+    + '<g class="flow">' + arrow(640, 178, 640, 150, '#2f8fcf', 3) + arrow(660, 214, 660, 242, '#2f8fcf', 3) + '</g>'
+    + '<line x1="650" y1="150" x2="650" y2="242" stroke="#444" stroke-width="3" stroke-dasharray="6 4"/>'
+    // 标签
+    + '<text class="lbl" x="150" y="135" text-anchor="middle">离散边界·海岭</text>'
+    + '<text class="lbl" x="470" y="340" text-anchor="middle">汇聚边界(俯冲)</text>'
+    + '<text class="lbl" x="650" y="270" text-anchor="middle">转换边界</text>'
+    + '<text class="lbl-s" x="40" y="240">地幔对流</text>'
+    + '<text class="lbl-s" x="40" y="200">岩石圈/板块</text>'
+    + '<text class="lbl-s" x="540" y="172">火山</text>'
+    + '<text class="lbl-s" x="430" y="225" fill="#e0552b">地震</text>'
+    + '</svg>';
+}
+function star(x, y) {
+  return '<polygon points="' + x + ',' + y + ' ' + (x - 5) + ',' + (y + 7) + ' ' + (x + 5) + ',' + (y + 7) + '"/>';
+}
+
+/* ---------- 城市热岛 ---------- */
+function svgCity() {
+  let b = '';
+  // 市中心高楼
+  const bx = [60, 110, 160, 210, 260];
+  const bh = [120, 170, 95, 150, 130];
+  for (let i = 0; i < 5; i++) b += '<rect x="' + bx[i] + '" y="' + (360 - bh[i]) + '" width="38" height="' + bh[i] + '" fill="#7b8794" stroke="#4a5560" stroke-width="2"/>';
+  // 郊区树木与矮房
+  b += '<rect x="600" y="320" width="46" height="40" fill="#cdb89a" stroke="#8a7355" stroke-width="2"/>'
+    + '<circle cx="560" cy="320" r="26" fill="#7cb342" stroke="#5a9e2f" stroke-width="2"/>'
+    + '<circle cx="690" cy="322" r="22" fill="#7cb342" stroke="#5a9e2f" stroke-width="2"/>'
+    + '<circle cx="730" cy="324" r="18" fill="#7cb342" stroke="#5a9e2f" stroke-width="2"/>';
+  // 地面
+  let s = '<svg viewBox="0 0 800 460" class="ill" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="城市热岛效应示意图">'
+    + '<rect width="800" height="460" fill="#f7fbfd"/>'
+    + '<line x1="0" y1="360" x2="800" y2="360" stroke="#9bb08a" stroke-width="2"/>'
+    + b
+    // 热浪（市中心上升）
+    + '<g class="pulse" stroke="#e0552b" stroke-width="3" fill="none">'
+    + '<path d="M90 230 q10 -14 0 -28 q-10 -14 0 -28"/><path d="M160 200 q10 -14 0 -28 q-10 -14 0 -28"/><path d="M230 220 q10 -14 0 -28 q-10 -14 0 -28"/></g>'
+    // 温度曲线
+    + '<path d="M40 120 C200 120 220 110 280 200 C360 320 440 320 520 250 C600 150 700 150 760 160" fill="none" stroke="#e0552b" stroke-width="3"/>'
+    // 温度计
+    + thermo(330, 230, 38) + thermo(560, 250, 30)
+    + '<text class="lbl" x="150" y="345" text-anchor="middle">市中心(高温)</text>'
+    + '<text class="lbl" x="650" y="345" text-anchor="middle">郊区(凉爽)</text>'
+    + '<text class="lbl" x="330" y="225" text-anchor="middle" fill="#e0552b">38℃</text>'
+    + '<text class="lbl" x="560" y="245" text-anchor="middle" fill="#3b7dd8">30℃</text>'
+    + '<text class="lbl-s" x="300" y="100" text-anchor="middle">气温剖面 · 市中心比郊区高约 8℃</text>'
+    + '</svg>';
+  return s;
+}
+function thermo(x, y, h) {
+  return '<rect x="' + (x - 6) + '" y="' + y + '" width="12" height="' + h + '" rx="6" fill="#fff" stroke="#888" stroke-width="2"/>'
+    + '<circle cx="' + x + '" cy="' + (y + h + 8) + '" r="9" fill="#e0552b" stroke="#b33" stroke-width="2"/>'
+    + '<rect x="' + (x - 3) + '" y="' + (y + h - 6) + '" width="6" height="14" fill="#e0552b"/>';
+}
+
+/* ---------- 人口迁移 ---------- */
+function svgMig() {
+  let dots = '';
+  for (let i = 0; i < 6; i++) dots += '<circle class="move" cx="250" cy="' + (300 + i * 8) + '" r="5" fill="#e0552b" style="animation-delay:' + (i * 0.5) + 's"/>';
+  return '<svg viewBox="0 0 800 460" class="ill" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="人口迁移示意图">'
+    + '<rect width="800" height="460" fill="#f7fbfd"/>'
+    + '<line x1="0" y1="360" x2="800" y2="360" stroke="#9bb08a" stroke-width="2"/>'
+    // 乡村
+    + '<rect x="80" y="300" width="70" height="60" fill="#cdb89a" stroke="#8a7355" stroke-width="2"/>'
+    + '<path d="M75 300 L115 270 L155 300 Z" fill="#a9543a" stroke="#7a3c28" stroke-width="2"/>'
+    + '<circle cx="200" cy="320" r="24" fill="#ffd23f" stroke="#f4b400" stroke-width="2"/>'
+    + '<rect x="60" y="330" width="160" height="30" fill="#9ccc65" stroke="#5a9e2f" stroke-width="2"/>'
+    // 城市
+    + '<rect x="560" y="250" width="40" height="110" fill="#7b8794" stroke="#4a5560" stroke-width="2"/>'
+    + '<rect x="610" y="210" width="40" height="150" fill="#607d8b" stroke="#37474f" stroke-width="2"/>'
+    + '<rect x="660" y="280" width="40" height="80" fill="#7b8794" stroke="#4a5560" stroke-width="2"/>'
+    // 迁移箭头
+    + '<g class="flow">' + arrow(260, 300, 560, 300, '#e0552b', 4) + '</g>' + dots
+    // 推拉因素
+    + '<text class="lbl" x="130" y="420" text-anchor="middle">乡村（迁出地）</text>'
+    + '<text class="lbl" x="620" y="420" text-anchor="middle">城市（迁入地）</text>'
+    + '<text class="lbl-s" x="60" y="200">推力：就业少 · 收入低 · 教育差</text>'
+    + '<text class="lbl-s" x="500" y="180">拉力：就业多 · 收入高 · 教育好</text>'
+    + '<text class="lbl" x="410" y="285" text-anchor="middle" fill="#e0552b">人口迁移（乡→城）</text>'
+    + '</svg>';
+}
+
+/* ---------- 地貌类型 ---------- */
+function svgLand() {
+  function scene(x, title, inner) {
+    return '<g transform="translate(' + x + ',60)"><rect x="0" y="0" width="140" height="300" fill="#fbfdff" stroke="#d6e2ea" stroke-width="2" rx="8"/>'
+      + inner + '<text class="lbl" x="70" y="288" text-anchor="middle">' + title + '</text></g>';
+  }
+  const m = scene(20, '山地', '<path d="M10 230 L55 110 L100 230 Z" fill="#cfd8c5" stroke="#8aa17a" stroke-width="2"/><path d="M55 110 L70 140 L40 140 Z" fill="#fff" stroke="#9bb08a" stroke-width="1.5"/>');
+  const r = scene(180, '河流', '<path d="M20 120 q50 30 100 0 q-50 60 0 100" fill="none" stroke="#4aa3df" stroke-width="8"/><path d="M10 240 L130 240" stroke="#8aa17a" stroke-width="2"/>');
+  const p = scene(340, '平原', '<path d="M10 220 q60 -20 120 0 L130 240 L10 240 Z" fill="#cde6a5" stroke="#8aa17a" stroke-width="2"/><circle cx="100" cy="180" r="16" fill="#ffd23f" stroke="#f4b400" stroke-width="2"/>');
+  const d = scene(500, '沙漠', '<path d="M10 200 q35 -25 70 0 q35 25 60 0 L130 240 L10 240 Z" fill="#f0d9a8" stroke="#caa46a" stroke-width="2"/><circle cx="40" cy="120" r="14" fill="#ffd23f" stroke="#f4b400" stroke-width="2"/>');
+  const c = scene(660, '海岸', '<path d="M10 200 L70 200 Q90 230 130 200 L130 240 L10 240 Z" fill="#cde6a5" stroke="#8aa17a" stroke-width="2"/><path d="M70 200 q15 -18 30 0 q-15 18 -30 0" fill="#4aa3df" stroke="#3b9ec9" stroke-width="2"/>');
+  return '<svg viewBox="0 0 800 460" class="ill" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="地貌类型示意图">' + m + r + p + d + c
+    + '<text class="lbl-s" x="400" y="395" text-anchor="middle">山地 · 河流 · 平原 · 沙漠 · 海岸（形象化示意）</text></svg>';
+}
+
+/* ---------- 唯一 id 工具（画廊中多个 SVG 并存，避免 defs id 冲突） ---------- */
+var __uid = 0;
+function uid(p) { __uid++; return p + '-' + __uid; }
+
+/* ---------- 地球公转与昼夜长短 ---------- */
+function svgRevolution() {
+  const SUNX = 250, SUNY = 232, RX = 160, RY = 116, R = 22, TILT = 23.5;
+  const mkA = uid('revarr');
+  const defs = '<defs><marker id="' + mkA + '" markerWidth="12" markerHeight="10" refX="10" refY="5" orient="auto">'
+    + '<path d="M0,0 L11,5 L0,10 Z" fill="#3b7dd8"/></marker></defs>';
+  function earth(x, y, sunAng) {
+    // 昼半球：以太阳方向为轴的半圆（显式三点弧，避免旋转叠加歧义）
+    const A = sunAng * Math.PI / 180;
+    const ax = Math.cos(A), ay = Math.sin(A);
+    const px = -ay, py = ax;
+    const p1x = x + px * R, p1y = y + py * R;
+    const p2x = x - px * R, p2y = y - py * R;
+    const sx = x + ax * R, sy = y + ay * R;
+    let s = '<circle cx="' + x + '" cy="' + y + '" r="' + R + '" fill="#2c3e57"/>';
+    s += '<path d="M' + x + ',' + y + ' L' + p1x.toFixed(1) + ',' + p1y.toFixed(1)
+      + ' A' + R + ',' + R + ' 0 0 0 ' + sx.toFixed(1) + ',' + sy.toFixed(1)
+      + ' A' + R + ',' + R + ' 0 0 0 ' + p2x.toFixed(1) + ',' + p2y.toFixed(1) + ' Z" fill="#ffe08a"/>';
+    // 地轴（倾角 23.5°，四位置方向一致）与赤道
+    s += '<g transform="rotate(' + TILT + ',' + x + ',' + y + ')">';
+    s += '<line x1="' + (x - R) + '" y1="' + y + '" x2="' + (x + R) + '" y2="' + y + '" stroke="#ffffff" stroke-width="1.5" stroke-dasharray="4 3" opacity=".85"/>';
+    s += '<line x1="' + x + '" y1="' + (y + 0.9 * R) + '" x2="' + x + '" y2="' + (y - 1.35 * R) + '" stroke="#c0492f" stroke-width="2.6"/>';
+    s += '<circle cx="' + x + '" cy="' + (y - 1.35 * R) + '" r="3.4" fill="#fff" stroke="#c0492f" stroke-width="1.2"/>';
+    s += '</g>';
+    return s;
+  }
+  function fmtDur(h) {
+    var hh = Math.floor(h), mm = Math.round((h - hh) * 60);
+    if (mm === 60) { hh += 1; mm = 0; }
+    return hh + 'h' + String(mm).padStart(2, '0') + 'm';
+  }
+  let s = '<svg viewBox="0 0 800 460" class="ill" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="地球公转与昼夜长短示意图">' + defs;
+  s += '<rect width="800" height="460" fill="#f7fbfe"/>';
+  s += '<ellipse cx="' + SUNX + '" cy="' + SUNY + '" rx="' + RX + '" ry="' + RY + '" fill="none" stroke="#cfdae3" stroke-width="2" stroke-dasharray="7 6"/>';
+  // 公转方向：自西向东（逆时针）春分 → 夏至
+  s += '<path d="M' + SUNX + ',' + (SUNY - RY) + ' A' + RX + ',' + RY + ' 0 0 0 ' + (SUNX - RX) + ',' + SUNY + '" fill="none" stroke="#3b7dd8" stroke-width="3" marker-end="url(#' + mkA + ')"/>';
+  s += '<text class="lbl-s" x="150" y="180" style="fill:#3b7dd8">公转方向（自西向东）</text>';
+  // 太阳
+  s += '<g class="spin" style="transform-origin:' + SUNX + 'px ' + SUNY + 'px">';
+  s += '<circle cx="' + SUNX + '" cy="' + SUNY + '" r="36" fill="#ffd23f" stroke="#f4b400" stroke-width="2"/>';
+  s += '<g stroke="#f4b400" stroke-width="3" stroke-linecap="round">'
+    + '<line x1="250" y1="182" x2="250" y2="168"/><line x1="250" y1="282" x2="250" y2="296"/>'
+    + '<line x1="200" y1="232" x2="186" y2="232"/><line x1="300" y1="232" x2="314" y2="232"/>'
+    + '<line x1="215" y1="197" x2="205" y2="187"/><line x1="285" y1="267" x2="295" y2="277"/>'
+    + '<line x1="285" y1="197" x2="295" y2="187"/><line x1="215" y1="267" x2="205" y2="277"/></g></g>';
+  // 四个地球位置
+  s += earth(90, 232, 0);      // 夏至：太阳在东侧 → 北极倾向太阳
+  s += earth(250, 116, 90);    // 春分：太阳在正下方
+  s += earth(410, 232, 180);   // 冬至：太阳在西侧 → 北极背离太阳
+  s += earth(250, 348, -90);   // 秋分：太阳在正上方
+  // 标注
+  s += '<text class="lbl" x="250" y="66" text-anchor="middle">春分</text><text class="lbl-s" x="250" y="84" text-anchor="middle">3.21</text>';
+  s += '<text class="lbl-s" x="250" y="158" text-anchor="middle">全球昼夜等长</text>';
+  s += '<text class="lbl" x="90" y="278" text-anchor="middle">夏至</text><text class="lbl-s" x="90" y="296" text-anchor="middle">6.22</text>';
+  s += '<text class="lbl-s" x="90" y="182" text-anchor="middle">北极圈内极昼</text>';
+  s += '<text class="lbl" x="410" y="278" text-anchor="middle">冬至</text><text class="lbl-s" x="410" y="296" text-anchor="middle">12.22</text>';
+  s += '<text class="lbl-s" x="410" y="182" text-anchor="middle">北极圈内极夜</text>';
+  s += '<text class="lbl" x="250" y="394" text-anchor="middle">秋分</text><text class="lbl-s" x="250" y="412" text-anchor="middle">9.23</text>';
+  s += '<text class="lbl" x="250" y="288" text-anchor="middle">太阳</text>';
+  s += '<text class="lbl-s" x="300" y="150">地轴倾角 23.5°</text>';
+  // 右侧：昼夜长短柱状
+  const PX = 468, PW = 312;
+  s += '<rect x="' + PX + '" y="42" width="' + PW + '" height="376" rx="14" fill="#ffffff" stroke="#d8e5ee" stroke-width="2"/>';
+  s += '<text class="lbl" x="' + (PX + 18) + '" y="72">北京(40°N)昼夜长短</text>';
+  const rows = [
+    { n: '春分', d: '3.21', day: 12.0, y: 96 },
+    { n: '夏至', d: '6.22', day: 14.85, y: 166 },
+    { n: '秋分', d: '9.23', day: 12.0, y: 236 },
+    { n: '冬至', d: '12.22', day: 9.15, y: 306 }
+  ];
+  rows.forEach(function (r) {
+    const full = 240, x0 = PX + 66, w = full * r.day / 24;
+    s += '<text class="lbl" x="' + (PX + 58) + '" y="' + (r.y + 16) + '" text-anchor="end">' + r.n + '</text>';
+    s += '<text class="lbl-s" x="' + (PX + 58) + '" y="' + (r.y + 32) + '" text-anchor="end">' + r.d + '</text>';
+    s += '<rect x="' + x0 + '" y="' + r.y + '" width="' + full + '" height="26" rx="6" fill="#dfe7ee"/>';
+    s += '<rect x="' + x0 + '" y="' + r.y + '" width="' + w.toFixed(1) + '" height="26" rx="6" fill="#ffd23f"/>';
+    s += '<text class="lbl-s" x="' + x0 + '" y="' + (r.y + 44) + '">昼 ' + fmtDur(r.day) + ' · 夜 ' + fmtDur(24 - r.day) + '</text>';
+  });
+  s += '<text class="lbl-s" x="' + (PX + 18) + '" y="386">北半球：夏至昼最长夜最短，冬至相反</text>';
+  s += '<text class="lbl-s" x="' + (PX + 18) + '" y="406">地轴倾角 23.5°，且指向始终不变</text>';
+  s += '</svg>';
+  return s;
+}
+
+/* ---------- 洋流分布 ---------- */
+function svgOcean() {
+  const mkW = uid('warm'), mkC = uid('cold');
+  const defs = '<defs>'
+    + '<marker id="' + mkW + '" markerUnits="userSpaceOnUse" markerWidth="15" markerHeight="13" refX="13" refY="6.5" orient="auto"><path d="M0,0 L14,6.5 L0,13 Z" fill="#e0552b"/></marker>'
+    + '<marker id="' + mkC + '" markerUnits="userSpaceOnUse" markerWidth="15" markerHeight="13" refX="13" refY="6.5" orient="auto"><path d="M0,0 L14,6.5 L0,13 Z" fill="#3b7dd8"/></marker>'
+    + '</defs>';
+  function mp(lon, lat) { return [40 + (lon + 180) * 2, 55 + (90 - lat) * 1.8889]; }
+  function poly(pts, fill) {
+    let d = '';
+    pts.forEach(function (p, i) { const q = mp(p[0], p[1]); d += (i ? 'L' : 'M') + q[0].toFixed(1) + ' ' + q[1].toFixed(1); });
+    return '<path d="' + d + ' Z" fill="' + fill + '" stroke="#9fb0bd" stroke-width="1.1" stroke-linejoin="round"/>';
+  }
+  function cpath(pts) {
+    const m = pts.map(function (p) { return mp(p[0], p[1]); });
+    let d = 'M' + m[0][0].toFixed(1) + ' ' + m[0][1].toFixed(1);
+    for (let i = 1; i < m.length; i++) {
+      const a = m[i - 1], b = m[i];
+      const mx = (a[0] + b[0]) / 2, my = (a[1] + b[1]) / 2;
+      d += ' Q' + a[0].toFixed(1) + ' ' + a[1].toFixed(1) + ' ' + mx.toFixed(1) + ' ' + my.toFixed(1);
+      d += ' Q' + b[0].toFixed(1) + ' ' + b[1].toFixed(1) + ' ' + mx.toFixed(1) + ' ' + my.toFixed(1);
+    }
+    return d;
+  }
+  function cur(pts, color, mk, dash) {
+    return '<path d="' + cpath(pts) + '" fill="none" stroke="' + color + '" stroke-width="4" stroke-linecap="round"'
+      + (dash ? ' class="flow"' : '') + ' marker-end="url(#' + mk + ')"/>';
+  }
+  function lbl(lon, lat, text, color, dx, dy) {
+    const q = mp(lon, lat);
+    return '<text class="lbl-s cl" x="' + (q[0] + (dx || 0)) + '" y="' + (q[1] + (dy || 0)) + '" style="fill:' + color + '">' + text + '</text>';
+  }
+  let s = '<svg viewBox="0 0 800 460" class="ill" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="世界洋流分布模式图">' + defs;
+  s += '<rect width="800" height="460" fill="#eef7fc"/>';
+  s += '<rect x="40" y="55" width="720" height="340" fill="#cfe7f6" stroke="#a8cbdd" stroke-width="1.5"/>';
+  // 陆地
+  s += poly([[-168, 66], [-155, 71], [-135, 70], [-115, 69], [-95, 69], [-80, 73], [-65, 66], [-55, 55], [-62, 48], [-70, 44], [-75, 37], [-82, 29], [-97, 22], [-105, 20], [-112, 27], [-122, 37], [-124, 48], [-135, 58], [-150, 60], [-165, 58]], '#e8e2d2');
+  s += poly([[-81, 8], [-72, 12], [-62, 10], [-52, 5], [-50, 0], [-44, -3], [-35, -6], [-39, -15], [-48, -25], [-53, -33], [-62, -40], [-66, -50], [-73, -53], [-75, -45], [-73, -37], [-72, -20], [-78, -8], [-81, 0]], '#e8e2d2');
+  s += poly([[-17, 15], [-6, 36], [10, 37], [25, 32], [33, 31], [42, 12], [50, 12], [48, -2], [42, -12], [40, -18], [35, -25], [32, -29], [25, -34], [20, -34], [15, -26], [12, -18], [9, -2], [2, 5], [-8, 5], [-14, 11]], '#e8e2d2');
+  s += poly([[-10, 36], [-9, 44], [-2, 48], [2, 51], [8, 54], [5, 58], [11, 59], [18, 69], [28, 71], [40, 68], [55, 70], [70, 73], [85, 75], [100, 77], [115, 74], [130, 72], [142, 70], [155, 69], [170, 68], [180, 66], [180, 58], [170, 60], [160, 62], [155, 55], [145, 48], [135, 43], [128, 35], [122, 31], [118, 24], [108, 20], [105, 10], [100, 6], [98, 15], [92, 21], [88, 22], [80, 13], [77, 8], [72, 20], [62, 25], [57, 25], [48, 29], [43, 37], [35, 36], [28, 41], [20, 40], [15, 38], [10, 44], [3, 43], [-2, 36]], '#e8e2d2');
+  s += poly([[113, -22], [122, -17], [130, -12], [137, -12], [142, -11], [146, -19], [153, -27], [150, -35], [143, -39], [135, -35], [128, -32], [120, -34], [114, -28]], '#e8e2d2');
+  s += poly([[-45, 60], [-32, 67], [-22, 70], [-20, 76], [-30, 82], [-45, 83], [-58, 80], [-60, 74], [-53, 66]], '#f2f6f8');
+  s += poly([[-180, -72], [-120, -74], [-60, -68], [0, -70], [60, -67], [120, -68], [180, -72], [180, -90], [-180, -90]], '#f2f6f8');
+  s += poly([[-5, 50], [-6, 54], [-3, 58], [-2, 58], [0, 53], [1, 51]], '#e8e2d2');
+  s += poly([[130, 32], [135, 34], [141, 41], [145, 44], [142, 45], [138, 37], [133, 34]], '#e8e2d2');
+  s += poly([[166, -46], [173, -41], [178, -37], [174, -35], [170, -43]], '#e8e2d2');
+  s += poly([[43, -12], [50, -16], [48, -25], [44, -22]], '#e8e2d2');
+  // 洋流
+  s += cur([[-170, 40], [-155, 43], [-142, 44], [-132, 43]], '#e0552b', mkW);
+  s += lbl(-152, 37, '北太平洋暖流', '#e0552b', 0, 0);
+  s += cur([[160, 52], [162, 44], [160, 34]], '#3b7dd8', mkC);
+  s += lbl(168, 42, '千岛寒流', '#3b7dd8', 8, -4);
+  s += cur([[142, 42], [139, 33], [131, 26]], '#e0552b', mkW);
+  s += lbl(118, 18, '日本暖流(黑潮)', '#e0552b', -6, -6);
+  s += cur([[-160, 13], [-130, 12], [-100, 11], [-85, 12]], '#e0552b', mkW);
+  s += lbl(-158, 14, '北赤道暖流', '#e0552b', 0, 0);
+  s += cur([[-126, 40], [-118, 28], [-110, 19]], '#3b7dd8', mkC);
+  s += lbl(-136, 26, '加利福尼亚寒流', '#3b7dd8', -6, 0);
+  s += cur([[-82, 25], [-72, 33], [-55, 42], [-35, 50], [-12, 58]], '#e0552b', mkW);
+  s += lbl(-70, 34, '墨西哥湾暖流→北大西洋暖流', '#e0552b', -10, -8);
+  s += cur([[-56, 64], [-52, 52], [-48, 42]], '#3b7dd8', mkC);
+  s += lbl(-70, 58, '拉布拉多寒流', '#3b7dd8', -8, 0);
+  s += cur([[-40, -4], [-42, -16], [-46, -28]], '#e0552b', mkW);
+  s += lbl(-30, -22, '巴西暖流', '#e0552b', -6, 0);
+  s += cur([[-78, -36], [-79, -20], [-80, -8]], '#3b7dd8', mkC);
+  s += lbl(-104, -24, '秘鲁寒流', '#3b7dd8', -6, 0);
+  s += cur([[13, -32], [14, -20], [16, -12]], '#3b7dd8', mkC);
+  s += lbl(-8, -32, '本格拉寒流', '#3b7dd8', -6, 0);
+  s += cur([[40, -24], [39, -12], [43, -2]], '#e0552b', mkW);
+  s += lbl(52, -14, '莫桑比克暖流', '#e0552b', 6, 0);
+  s += cur([[58, 8], [72, 14], [90, 12], [100, 16]], '#e0552b', mkW, true);
+  s += lbl(56, 20, '季风洋流', '#e0552b', 0, 0);
+  s += cur([[-170, -50], [-120, -56], [-60, -58], [0, -56], [70, -52], [140, -50], [175, -46]], '#3b7dd8', mkC, true);
+  s += lbl(-40, -49, '西风漂流(南)', '#3b7dd8', 0, -6);
+  s += cur([[20, -12], [-10, -14], [-45, -13]], '#e0552b', mkW);
+  s += lbl(14, -10, '南赤道暖流', '#e0552b', 0, 0);
+  // 图例
+  s += '<rect x="40" y="404" width="720" height="40" rx="10" fill="#ffffff" stroke="#d8e5ee" stroke-width="1.5"/>';
+  s += '<rect x="60" y="418" width="26" height="10" rx="5" fill="#e0552b"/><text class="lbl-s" x="94" y="428">暖流：从低纬流向高纬，增温增湿</text>';
+  s += '<rect x="380" y="418" width="26" height="10" rx="5" fill="#3b7dd8"/><text class="lbl-s" x="414" y="428">寒流：从高纬流向低纬，降温减湿</text>';
+  s += '</svg>';
+  return s;
+}
+
+/* ---------- 气候类型分布（理想大陆模式图） ---------- */
+function svgClimate() {
+  const NX0 = 70, NX1 = 390, SX0 = 450, SX1 = 770;
+  const Y0 = 58, YM = 212, YB = 362;
+  const k = (YM - Y0) / 90;
+  const cid = uid('clim');
+  function ny(lat) { return Y0 + (90 - lat) * k; }
+  function sy(lat) { return YM + (0 - lat) * k; }
+  const W2 = 58;
+  const northPath = 'M' + NX0 + ',145 Q' + NX0 + ',66 125,60 L320,60 Q' + NX1 + ',70 ' + NX1 + ',135 L' + NX1 + ',155 Q' + NX1 + ',196 330,' + YM + ' L125,' + YM + ' Q' + NX0 + ',196 ' + NX0 + ',145 Z';
+  const southPath = 'M' + SX0 + ',' + YM + ' L' + (SX1 - 40) + ',' + YM + ' Q' + SX1 + ',' + (YM + 60) + ' ' + (SX1 - 55) + ',' + (YB - 12) + ' Q' + (SX1 - 130) + ',' + YB + ' ' + 560 + ',' + YB + ' Q' + SX0 + ',' + (YB - 14) + ' ' + SX0 + ',' + (YM + 36) + ' Z';
+  const C = { rain: '#1f7a4d', savanna: '#d9a85c', desert: '#ecd9a8', sub: '#e2c95e', med: '#e08a3c', marine: '#5a9ea8', monsoon: '#a9c76a', conti: '#d9c68a', taiga: '#3d7a56', polar: '#e3eef5', mid: '#dccd9c' };
+  const NB = [
+    { t: ny(90), b: ny(75), w: C.polar, c: C.polar, e: C.polar },
+    { t: ny(75), b: ny(55), w: C.taiga, c: C.taiga, e: C.taiga },
+    { t: ny(55), b: ny(40), w: C.marine, c: C.conti, e: C.monsoon },
+    { t: ny(40), b: ny(30), w: C.med, c: C.mid, e: C.sub },
+    { t: ny(30), b: ny(20), w: C.savanna, c: C.desert, e: C.savanna },
+    { t: ny(20), b: ny(10), w: C.savanna, c: C.savanna, e: C.savanna },
+    { t: ny(10), b: ny(0), w: C.rain, c: C.rain, e: C.rain }
+  ];
+  const SB = [
+    { t: sy(0), b: sy(-10), w: C.rain, c: C.rain, e: C.rain },
+    { t: sy(-10), b: sy(-20), w: C.savanna, c: C.savanna, e: C.savanna },
+    { t: sy(-20), b: sy(-30), w: C.desert, c: C.desert, e: C.desert },
+    { t: sy(-30), b: sy(-40), w: C.med, c: C.mid, e: C.sub },
+    { t: sy(-40), b: sy(-55), w: C.marine, c: C.conti, e: C.conti },
+    { t: sy(-55), b: sy(-65), w: C.taiga, c: C.taiga, e: C.taiga },
+    { t: sy(-65), b: sy(-90), w: C.polar, c: C.polar, e: C.polar }
+  ];
+  function bands(list, x0, x1) {
+    let out = '';
+    list.forEach(function (b) {
+      const h = b.b - b.t;
+      out += '<rect x="' + x0 + '" y="' + b.t.toFixed(1) + '" width="' + W2 + '" height="' + h.toFixed(1) + '" fill="' + b.w + '"/>';
+      out += '<rect x="' + (x0 + W2) + '" y="' + b.t.toFixed(1) + '" width="' + (x1 - x0 - 2 * W2) + '" height="' + h.toFixed(1) + '" fill="' + b.c + '"/>';
+      out += '<rect x="' + (x1 - W2) + '" y="' + b.t.toFixed(1) + '" width="' + W2 + '" height="' + h.toFixed(1) + '" fill="' + b.e + '"/>';
+    });
+    return out;
+  }
+  let s = '<svg viewBox="0 0 800 460" class="ill" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="世界气候类型分布模式图">';
+  s += '<defs><clipPath id="' + cid + '"><path d="' + northPath + '"/><path d="' + southPath + '"/></clipPath></defs>';
+  s += '<rect width="800" height="460" fill="#fbfdfd"/>';
+  s += '<g clip-path="url(#' + cid + ')">' + bands(NB, NX0, NX1) + bands(SB, SX0, SX1) + '</g>';
+  s += '<path d="' + northPath + '" fill="none" stroke="#9fb0bd" stroke-width="1.4"/>';
+  s += '<path d="' + southPath + '" fill="none" stroke="#9fb0bd" stroke-width="1.4"/>';
+  // 标题与纬度标注
+  s += '<text class="lbl" x="230" y="44" text-anchor="middle">北半球理想大陆</text>';
+  s += '<text class="lbl" x="610" y="196" text-anchor="middle">南半球理想大陆</text>';
+  [[90, '90°N'], [60, '60°N'], [30, '30°N'], [0, '0°']].forEach(function (a) {
+    s += '<text class="lbl-s" x="' + (NX0 - 8) + '" y="' + (ny(a[0]) + 4).toFixed(1) + '" text-anchor="end">' + a[1] + '</text>';
+  });
+  [[0, '0°'], [30, '30°S'], [60, '60°S'], [90, '90°S']].forEach(function (a) {
+    s += '<text class="lbl-s" x="' + (SX0 - 8) + '" y="' + (sy(-a[0]) + 4).toFixed(1) + '" text-anchor="end">' + a[1] + '</text>';
+  });
+  // 带上标注
+  s += '<text class="lbl-s" x="230" y="' + (ny(5) + 4).toFixed(1) + '" text-anchor="middle" style="fill:#fff">雨林</text>';
+  s += '<text class="lbl-s" x="230" y="' + (ny(15) + 4).toFixed(1) + '" text-anchor="middle">草原</text>';
+  s += '<text class="lbl-s" x="230" y="' + (ny(25) + 4).toFixed(1) + '" text-anchor="middle">沙漠</text>';
+  s += '<text class="lbl-s" x="230" y="' + (ny(38) + 4).toFixed(1) + '" text-anchor="middle">温带大陆性</text>';
+  s += '<text class="lbl-s" x="' + (NX0 + 29) + '" y="' + (ny(48) + 4).toFixed(1) + '" text-anchor="middle" style="fill:#fff">海洋性</text>';
+  s += '<text class="lbl-s" x="' + (NX1 - 29) + '" y="' + (ny(48) + 4).toFixed(1) + '" text-anchor="middle">季风</text>';
+  s += '<text class="lbl-s" x="' + (NX0 + 30) + '" y="' + (ny(35) + 4).toFixed(1) + '" text-anchor="middle" style="fill:#fff">地中海</text>';
+  s += '<text class="lbl-s" x="230" y="' + (ny(65) + 4).toFixed(1) + '" text-anchor="middle" style="fill:#fff">亚寒带针叶林</text>';
+  s += '<text class="lbl-s" x="' + (NX0 + 30) + '" y="' + (ny(82) + 4).toFixed(1) + '" text-anchor="middle">冰原</text>';
+  s += '<text class="lbl-s" x="' + (NX1 - 36) + '" y="' + (ny(35) + 4).toFixed(1) + '" text-anchor="middle" style="font-size:11px">亚热带季风</text>';
+  s += '<text class="lbl-s" x="' + (SX0 + 29) + '" y="' + (sy(-45) + 4).toFixed(1) + '" text-anchor="middle" style="fill:#fff">海洋性</text>';
+  s += '<text class="lbl-s" x="' + (SX1 - 36) + '" y="' + (sy(-35) + 4).toFixed(1) + '" text-anchor="middle" style="font-size:11px">亚热带季风</text>';
+  s += '<text class="lbl-s" x="610" y="' + (sy(-48) + 4).toFixed(1) + '" text-anchor="middle">温带大陆性</text>';
+  s += '<text class="lbl-s" x="610" y="' + (sy(-25) + 4).toFixed(1) + '" text-anchor="middle">沙漠</text>';
+  s += '<text class="lbl-s" x="610" y="' + (sy(-5) + 4).toFixed(1) + '" text-anchor="middle" style="fill:#fff">雨林</text>';
+  s += '<text class="lbl-s" x="70" y="' + (YM + 18) + '">西岸 ←</text><text class="lbl-s" x="390" y="' + (YM + 18) + '" text-anchor="end">→ 东岸</text>';
+  // 图例
+  const LEG = [
+    [C.rain, '热带雨林气候'], [C.savanna, '热带草原气候'], [C.desert, '热带沙漠气候'],
+    [C.sub, '亚热带季风气候'], [C.med, '地中海气候'], [C.marine, '温带海洋性气候'],
+    [C.monsoon, '温带季风气候'], [C.conti, '温带大陆性气候'], [C.taiga, '亚寒带针叶林气候'],
+    [C.polar, '极地冰原气候']
+  ];
+  LEG.forEach(function (it, i) {
+    const col = i % 5, row = Math.floor(i / 5);
+    const x = 22 + col * 156, y = 396 + row * 30;
+    s += '<rect x="' + x + '" y="' + (y - 10) + '" width="14" height="14" rx="3" fill="' + it[0] + '" stroke="#b9c6d1" stroke-width="1"/>';
+    s += '<text class="lbl-s" x="' + (x + 20) + '" y="' + y + '">' + it[1] + '</text>';
+  });
+  s += '</svg>';
+  return s;
+}
+
+/* ---------- 通用概念结构图（未知主题） ---------- */
+function svgGeneric(topic) {
+  const items = [['成因', 180], ['过程', 320], ['典型景观', 460], ['案例/应用', 600]];
+  let links = '', boxes = '';
+  items.forEach(function (it) {
+    links += arrow(400, 200, it[1], 130, '#3b7dd8', 2) + arrow(400, 260, it[1], 330, '#3b7dd8', 2);
+    boxes += '<rect x="' + (it[1] - 55) + '" y="110" width="110" height="44" rx="8" fill="#eef6fb" stroke="#3b7dd8" stroke-width="2"/>'
+      + '<text class="lbl" x="' + it[1] + '" y="138" text-anchor="middle">' + it[0] + '</text>'
+      + '<rect x="' + (it[1] - 55) + '" y="320" width="110" height="44" rx="8" fill="#eef6fb" stroke="#3b7dd8" stroke-width="2"/>'
+      + '<text class="lbl-s" x="' + it[1] + '" y="348" text-anchor="middle">填写要点</text>';
+  });
+  return '<svg viewBox="0 0 800 460" class="ill" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="概念结构图">'
+    + '<rect width="800" height="460" fill="#fff"/>'
+    + '<circle cx="400" cy="230" r="54" fill="#ffd23f" stroke="#f4b400" stroke-width="2"/>'
+    + '<text class="lbl" x="400" y="226" text-anchor="middle" font-size="14">' + topic + '</text><text class="lbl-s" x="400" y="246" text-anchor="middle">主题</text>'
+    + links + boxes
+    + '<text class="lbl-s" x="400" y="430" text-anchor="middle">该主题暂无专属矢量图，已生成通用结构图；如需细化可展开"提示词"出像素图。</text>'
+    + '</svg>';
+}
+
+/* ---------- 调度 ---------- */
+const KNOWN = {
+  '地球公转': svgRevolution, '昼夜长短': svgRevolution,
+  '洋流分布': svgOcean, '洋流': svgOcean,
+  '气候类型': svgClimate, '气候': svgClimate,
+  '水循环': svgWater, '大气环流': svgAir, '板块构造': svgPlates,
+  '城市热岛': svgCity, '人口迁移': svgMig, '地貌类型': svgLand
+};
+function pickSVG(topic) {
+  for (const k in KNOWN) if (topic.indexOf(k) >= 0) return KNOWN[k]();
+  return svgGeneric(topic);
+}
+
+/* ---------- 提示词（可选，出像素图用） ---------- */
+const STYLE_EN = {
+  '卡通扁平': 'flat cartoon illustration, clean vectors, bright colors',
+  '手绘水彩': 'hand-drawn watercolor style, soft textures, gentle colors',
+  '信息图': 'infographic style, clear diagrams, labeled, concise',
+  '写实': 'realistic scientific illustration, accurate details'
+};
+function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+function buildCN(t, a, s, e) { return '一幅关于「' + t + '」的科普插图，' + s + '风格，面向' + a + '；画面清晰、信息准确、标注简洁' + (e ? '；重点表现：' + e : '') + '。'; }
+function buildEN(t, a, s, e) {
+  const enAud = { '小学生': 'primary school children', '初中生': 'middle school students', '高中生': 'high school students', '公众科普': 'general public' }[a] || a;
+  return 'A science popularization illustration about "' + t + '", ' + STYLE_EN[s] + ', for ' + enAud + '; clear, accurate, with concise labels' + (e ? '; emphasize: ' + e : '') + '.';
+}
+
+/* ---------- 生成 ---------- */
+function generate() {
+  const topic = document.getElementById('topic').value.trim() || '水循环';
+  const aud = document.getElementById('audience').value;
+  const style = document.getElementById('styleSel').value;
+  const emph = document.getElementById('emph').value.trim();
+  const svg = pickSVG(topic);
+  const cn = buildCN(topic, aud, style, emph);
+  const en = buildEN(topic, aud, style, emph);
+  window.__topic = topic; window.__illCN = cn; window.__illEN = en;
+  document.getElementById('resultBox').innerHTML =
+    '<div class="ill-card"><div id="illBox">' + svg + '</div>'
+    + '<div class="field" style="margin-top:12px"><label>收藏标签（逗号/空格分隔，留空用默认标签）</label><input id="illTagsInput" type="text" placeholder="如：必修一,自然地理,课堂用"></div>'
+    + '<div class="row" style="margin-top:10px">'
+    + '<button class="btn sm" type="button" onclick="downloadSVG()">⬇ 下载 SVG</button>'
+    + '<button class="btn ghost sm" type="button" onclick="collectCurrent()">收藏到工作台</button>'
+    + '<button class="btn ghost sm" type="button" onclick="togglePrompts()">提示词（如需像素图）</button>'
+    + '</div>'
+    + '<div id="promptBox" hidden>'
+    + '<div class="field"><label>插图构思</label><textarea id="planOut" rows="4">' + esc('面向' + aud + '的「' + topic + '」' + style + '风格插图；' + (emph || '按标准地理图示呈现核心要素与过程。')) + '</textarea></div>'
+    + '<div class="field"><label>中文提示词（去出像素图）</label><textarea id="cnOut" rows="3">' + esc(cn) + '</textarea></div>'
+    + '<div class="field"><label>English Prompt</label><textarea id="enOut" rows="3">' + esc(en) + '</textarea></div>'
+    + '<div class="row"><button class="btn sm" type="button" onclick="copyIllustration()">复制提示词</button>'
+    + '<button class="btn ghost sm" type="button" onclick="exportDoc(\'promptBox\',\'科普插图方案\')">导出 Word</button></div>'
+    + '</div></div>';
+  document.getElementById('genHint').textContent = '已生成 SVG 插图，可下载或展开提示词。';
+}
+
+function togglePrompts() {
+  const b = document.getElementById('promptBox');
+  if (b) b.hidden = !b.hidden;
+}
+function downloadSVG() {
+  const svg = document.querySelector('#illBox svg');
+  if (!svg) return;
+  const s = new XMLSerializer().serializeToString(svg);
+  const blob = new Blob(['<?xml version="1.0" encoding="UTF-8"?>\n' + s], { type: 'image/svg+xml' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = '插图_' + (window.__topic || 'topic') + '.svg'; a.click();
+  URL.revokeObjectURL(url);
+}
+function collectCurrent() {
+  const svgEl = document.querySelector('#illBox svg');
+  if (!svgEl) { alert('请先生成插图。'); return; }
+  const s = new XMLSerializer().serializeToString(svgEl);
+  const topic = window.__topic || document.getElementById('topic').value.trim() || '未命名插图';
+  const aud = document.getElementById('audience').value;
+  const style = document.getElementById('styleSel').value;
+  const extra = (document.getElementById('illTagsInput').value || '').trim();
+  const tags = [topic, aud, style];
+  extra.split(/[\s,，、]+/).forEach(t => { t = t.trim(); if (t) tags.push(t); });
+  const seen = new Set(); const uniq = tags.filter(t => { if (seen.has(t)) return false; seen.add(t); return true; });
+  window.IllustrationLibrary.add({ topic: topic, audience: aud, style: style, svg: s, tags: uniq });
+  alert('已收藏「' + topic + '」到工作台「插图收藏 · 标签管理」。可在工作台按标签筛选、增删标签。');
+}
+function collectGallery(t) {
+  const svgEl = document.querySelector('#g-' + t + ' svg');
+  if (!svgEl) return;
+  const s = new XMLSerializer().serializeToString(svgEl);
+  const p = PRESETS.find(x => x.t === t) || { a: '预设', s: '默认' };
+  const tags = [t, p.a, p.s];
+  window.IllustrationLibrary.add({ topic: t, audience: p.a, style: p.s, svg: s, tags: tags });
+  alert('已收藏「' + t + '」到工作台「插图收藏 · 标签管理」。');
+}
+function copyIllustration() {
+  const cn = document.getElementById('cnOut') ? document.getElementById('cnOut').value : (window.__illCN || '');
+  const en = document.getElementById('enOut') ? document.getElementById('enOut').value : (window.__illEN || '');
+  navigator.clipboard.writeText('【中文提示词】\n' + cn + '\n\n【English Prompt】\n' + en)
+    .then(() => alert('已复制中英文提示词。')).catch(() => alert('复制失败。'));
+}
+
+/* ---------- 预设 / 画廊 ---------- */
+const PRESETS = [
+  { t: '水循环', a: '初中生', s: '信息图' },
+  { t: '大气环流', a: '高中生', s: '写实' },
+  { t: '板块构造', a: '初中生', s: '卡通扁平' },
+  { t: '城市热岛', a: '公众科普', s: '手绘水彩' },
+  { t: '人口迁移', a: '高中生', s: '信息图' },
+  { t: '地貌类型', a: '小学生', s: '卡通扁平' },
+  { t: '地球公转', a: '高中生', s: '信息图' },
+  { t: '洋流分布', a: '高中生', s: '信息图' },
+  { t: '气候类型', a: '初中生', s: '卡通扁平' }
+];
+function renderPresets() {
+  const g = document.getElementById('presetGrid'); g.innerHTML = '';
+  PRESETS.forEach(function (p) {
+    const c = document.createElement('div'); c.className = 'template';
+    c.innerHTML = '<div class="t-head"><h4>🧭 ' + esc(p.t) + '</h4></div>'
+      + '<div class="refline">' + esc(p.a) + ' · ' + esc(p.s) + '</div>'
+      + '<div class="row"><button class="btn sm" type="button" data-gen="' + p.t + '">生成</button>'
+      + '<button class="btn ghost sm" type="button" data-fill="' + p.t + '">填入</button></div>';
+    c.querySelector('[data-gen]').onclick = function () {
+      document.getElementById('topic').value = p.t;
+      document.getElementById('audience').value = p.a;
+      document.getElementById('styleSel').value = p.s;
+      generate();
+      document.getElementById('result').scrollIntoView();
+    };
+    c.querySelector('[data-fill]').onclick = function () {
+      document.getElementById('topic').value = p.t;
+      document.getElementById('audience').value = p.a;
+      document.getElementById('styleSel').value = p.s;
+      document.getElementById('input').scrollIntoView();
+    };
+    g.appendChild(c);
+  });
+}
+function renderGallery() {
+  const g = document.getElementById('galleryBox'); g.innerHTML = '';
+  PRESETS.forEach(function (p) {
+    const c = document.createElement('div'); c.className = 'card';
+    c.innerHTML = '<div id="g-' + p.t + '">' + KNOWN[p.t]() + '</div>'
+      + '<h3 style="margin:10px 0 4px">' + esc(p.t) + '</h3>'
+      + '<p style="font-size:13px;color:#5a6b78">受众：' + esc(p.a) + ' · ' + esc(p.s) + '</p>'
+      + '<div class="row"><button class="btn ghost sm" type="button" onclick="dlGallery(\'' + p.t + '\')">下载 SVG</button>'
+      + '<button class="btn ghost sm" type="button" onclick="collectGallery(\'' + p.t + '\')">收藏到工作台</button></div>';
+    g.appendChild(c);
+  });
+}
+function dlGallery(t) {
+  const svg = document.querySelector('#g-' + t + ' svg');
+  if (!svg) return;
+  const s = new XMLSerializer().serializeToString(svg);
+  const blob = new Blob(['<?xml version="1.0" encoding="UTF-8"?>\n' + s], { type: 'image/svg+xml' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url; a.download = '插图_' + t + '.svg'; a.click();
+  URL.revokeObjectURL(url);
+}
+
+document.getElementById('genBtn').addEventListener('click', generate);
+renderPresets();
+renderGallery();
+</script>
+</body>
+</html>
