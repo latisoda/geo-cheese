@@ -1,5 +1,7 @@
 # 硬糖的地理芝士 · 地理教师备课教研一体化工作台
 
+> 🌐 **在线访问（GitHub Pages）：** https://latisoda.github.io/geo-cheese/
+
 一个面向中学地理教师的**纯静态、零依赖**专业工作台：备课、授课、反思、教研、班级成绩、教材资源、教学案生成、科普插图、地理讲义，全部在浏览器本地运行，**无需联网、无需服务器、可一键托管到 GitHub Pages**。
 
 > 命名源自一位地理老师的巧思——「芝士」即「知识」。
@@ -39,7 +41,7 @@ gh auth login          # 选 GitHub.com → HTTPS → 用浏览器登录
 
 ```bash
 gh repo create geo-cheese --public --source=. --remote=origin --push
-# 仓库 Settings → Pages → Source 选择 "main" 分支 / (root)
+# 仓库 Settings → Pages → Source 选择 "master" 分支 / (root)
 ```
 
 > 由于根目录已是静态 HTML 且包含 `.nojekyll`，GitHub 不会用 Jekyll 处理，直接以静态站点发布。稍候 1–2 分钟即可获得 `https://<你的用户名>.github.io/geo-cheese/` 永久访问地址。
