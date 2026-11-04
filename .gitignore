@@ -5,3 +5,6 @@
 .tmp-check/
 .DS_Store
 node_modules/
+
+# WorkBuddy 本地项目数据（内存/日志，不发布到公开站点）
+.workbuddy-ai/
