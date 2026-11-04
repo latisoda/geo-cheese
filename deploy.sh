@@ -55,9 +55,10 @@ else
   $GH repo create "$REPO" --"$VISIBILITY" --source=. --remote=origin --push
 fi
 
-echo "==> 开启 GitHub Pages（source: main / root）"
+BRANCH="$(git rev-parse --abbrev-ref HEAD)"
+echo "==> 开启 GitHub Pages（source: $BRANCH / root）"
 $GH api "repos/$REPO/pages" -X POST \
-  -f source[branch]=main -f source[path]=/ \
+  -f source[branch]="$BRANCH" -f source[path]=/ \
   --jq '.html_url' 2>/dev/null || echo "   （Pages 可能已开启，或请在仓库 Settings → Pages 中确认）"
 
 echo ""
