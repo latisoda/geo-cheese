@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>外部资源库 · 硬糖的地理芝士</title>
+<link rel="stylesheet" href="assets/style.css" />
+<style>
+  /* ===== 资源库专属样式 ===== */
+  .filterbar{
+    display:flex; flex-wrap:wrap; gap:10px; margin:6px 0 26px;
+  }
+  .filterbar button{
+    border:1px solid var(--line,#e3e8ef); background:#fff; color:#334155;
+    padding:8px 16px; border-radius:999px; cursor:pointer; font-size:14px;
+    transition:.15s; font-weight:600;
+  }
+  .filterbar button:hover{border-color:#fb7185; color:#e11d48;}
+  .filterbar button.active{background:#e11d48; border-color:#e11d48; color:#fff;}
+  .res-section{margin-bottom:34px;}
+  .res-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:16px;}
+  .res-card{
+    border:1px solid var(--line,#e3e8ef); border-radius:14px; padding:16px 18px;
+    background:#fff; display:flex; flex-direction:column; gap:8px; transition:.15s;
+  }
+  .res-card:hover{box-shadow:0 8px 24px rgba(15,23,42,.08); transform:translateY(-2px);}
+  .res-head{display:flex; justify-content:space-between; align-items:baseline; gap:10px;}
+  .res-head a{font-weight:700; color:#0f172a; text-decoration:none; font-size:15.5px; word-break:break-word;}
+  .res-head a:hover{color:#e11d48;}
+  .res-stars{color:#f59e0b; font-weight:700; white-space:nowrap; font-size:13px;}
+  .res-desc{color:#475569; font-size:13.5px; line-height:1.6; margin:0;}
+  .res-meta{display:flex; flex-wrap:wrap; gap:6px; margin-top:2px;}
+  .chip{background:#f1f5f9; color:#475569; border-radius:6px; padding:3px 9px; font-size:12px;}
+  .chip.t{background:#fee2e8; color:#be123c;}
+  .res-note{background:#fff7ed; border:1px solid #fed7aa; color:#9a3412; border-radius:10px; padding:12px 16px; font-size:13.5px; line-height:1.6;}
+  @media(max-width:560px){ .res-grid{grid-template-columns:1fr;} }
+</style>
+</head>
+<body>
+
+<!-- ===== 顶栏 / 总目录 ===== -->
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="brand"><span class="logo">地</span> 硬糖的地理芝士</div>
+    <nav class="toc">
+      <a href="index.html" class="backlink">← 工作台</a>
+      <a href="textbooks.html">📚 教材资源包</a>
+      <a href="lesson-planner.html">🛠 教学案生成器</a>
+      <a href="science-illustration.html">🎨 科普插图</a>
+      <a href="lecture-notes.html">📖 地理讲义</a>
+      <a href="#all">🌐 资源库</a>
+    </nav>
+  </div>
+</div>
+
+<!-- ===== Hero ===== -->
+<header class="hero">
+  <div class="hero-inner">
+    <h1>地理 · 地球科学 · 跨学科教育资源库</h1>
+    <p>从 <b>GitHub</b> 上筛选、整理的一批开源教学资源，覆盖<strong>高中地理、地球科学及跨学科教育</strong>。按「互动可视化 / 动图动画 / 教材数据 / 跨学科」分类，每条均附 GitHub 原文链接——方便你课前浏览、课堂演示或改编。与「科普插图生成器」配合使用，校内资源 + 开源资源互补。</p>
+    <div class="hero-tags">
+      <span>🌐 互动可视化</span><span>🎞 动图 / 动画</span><span>📦 教材 / 数据</span><span>🔬 跨学科</span>
+    </div>
+    <div class="res-note">
+      ⚠️ <b>版权与许可提醒：</b>各仓库许可证（License）不同，课堂使用前请查看其 <code>LICENSE</code> 文件；部分需本地运行（Node / Python / Jupyter），部分可直接打开网页。本页仅作索引，资源版权归原作者所有。
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ===== 筛选条 ===== -->
+  <div class="filterbar" id="all">
+    <button class="active" onclick="filterRes('all',this)">全部</button>
+    <button onclick="filterRes('interactive',this)">互动 · 可视化</button>
+    <button onclick="filterRes('animation',this)">动图 · 动画</button>
+    <button onclick="filterRes('resources',this)">教材 · 数据</button>
+    <button onclick="filterRes('inter',this)">跨学科</button>
+  </div>
+
+  <!-- ===== 互动 / 可视化 ===== -->
+  <section class="res-section section" id="cat-interactive" data-cat="interactive">
+    <div class="section-head">
+      <span class="kicker">RESOURCES 01</span>
+      <h2>🌐 互动 · 可视化</h2>
+      <p>可直接打开网页或将数据加载到浏览器的交互式地球、气候地图、气象与海洋模拟、实时地震地球等——适合课堂演示与探究。</p>
+    </div>
+    <div class="res-grid">
+
+      <div class="res-card">
+        <div class="res-head"><a href="https://github.com/smithjohn78390/tongjiang-lab" target="_blank" rel="noopener">铜匠实验室 · Tongjiang Lab</a><span class="res-stars">★ 1529</span></div>
+        <p class="res-desc">面向高中的免费交互式 3D 科学课程（lab.tongjiang.app），包含大量可操作的科学模拟与探究模块。</p>
+        <div class="res-meta"><span class="chip t">互动</span><span class="chip">HTML</span><span class="chip">高中</span></div>
+      </div>
+
+      <div class="res-card">
+        <div class="res-head"><a href="https://github.com/colincode0/earth-view" target="_blank" rel="noopener">earth-view</a><span class="res-stars">★ 415</span></div>
+        <p class="res-desc">NASA GIBS 与哥白尼 Sentinel 卫星影像的 3D 地球浏览器（Three.js），支持区域缩放、时间序列回放。</p>
+        <div class="res-meta"><span class="chip t">互动</span><span class="chip">TypeScript</span><span class="chip">遥感</span></div>
+      </div>
+
+      <div class="res-card">
+        <div class="res-head"><a href="https://github.com/bartromgens/climatemaps" target="_blank" rel="noopener">climatemaps</a><span class="res-stars">★ 87</span></div>
+        <p class="res-desc">全球月度气候数据（历史 + 预测）的交互式地图，适合气候类型、气候变化专题演示。</p>
+        <div class="res-meta"><span class="chip t">互动</span><span class="chip">Python</span><span class="chip">气候</span></div>
+      </div>
+
+      <div class="res-card">
+        <div class="res-head"><a href="https://github.com/boukestam/history-from-space" target="_blank" rel="noopener">history-from-space</a><span class="res-stars">★ 23</span></div>
+        <p class="res-desc">近 10 万年地球的交互模型：海平面、气候与冰盖随科学数据变化（WebGL / THREE.js）。</p>
+        <div class="res-meta"><span class="chip t">互动</span><span class="chip">WebGL</span><span class="chip">冰期</span></div>
+      </div>
+
+      <div class="res-card">
+        <div class="res-head"><a href="https://github.com/nicolejkeeney/icesat2-book" target="_blank" rel="noopener">icesat2-book</a><span class="res-stars">★ 18</span></div>
+        <p class="res-desc">ICESat-2 海冰厚度的交互式 Jupyter Book，含数据处理、可视化与分析流程。</p>
+        <div class="res-meta"><span class="chip t">互动</span><span class="chip">Jupyter</span><span class="chip">海冰</span></div>
+      </div>
+
+      <div class="res-card">
+        <div class="res-head"><a href="https://github.com/BetaNumeric/climate_spiral" target="_blank" rel="noopener">climate_spiral</a><span class="res-stars">★ 10</span></div>
+        <p class="res-desc">1880 年以来全球气温上升的 3D 网页可视化（经典"气候螺旋"），适合全球变暖导入。</p>
+        <div class="res-meta"><span class="chip t">互动</span><span class="chip">JavaScript</span><span class="chip">气候</span></div>
+      </div>
+
+      <div class="res-card">
+        <div class="res-head"><a href="https://github.com/AaronMurillo01/Real-Time-Earthquake-Globe" target="_blank" rel="noopener">Real-Time-Earthquake-Globe</a><span class="res-stars">★ 3</span></div>
+        <p class="res-desc">基于 USGS 实时数据的 3D 地震地球，含时间轴回放、深度筛选与详情视图（React / Three.js）。</p>
+        <div class="res-meta"><span class="chip t">互动</span><span class="chip">React</span><span class="chip">地震</span></div>
+      </div>
+
+      <div class="res-card">
+        <div class="res-head"><a href="https://github.com/AhmadAmmar/atmosphere-atlas" target="_blank" rel="noopener">atmosphere-atlas</a><span class="res-stars">—</span></div>
+        <p class="res-desc">解释天气、海洋与气候的交互式 3D 地球，单页整合大气环流与洋流概念。</p>
+        <div class="res-meta"><span class="chip t">互动</span><span class="chip">Python</span><span class="chip">大气</span></div>
+      </div>
+
+      <div class="res-card">
+        <div class="res-head"><a href="https://github.com/kimjunny/typhoon-design-game" target="_blank" rel="noopener">typhoon-design-game</a><span class="res-stars">★ 1</span></div>
+        <p class="res-desc">ENSO 台风设计游戏：用 GFS 风场可视化做交互式气象教学（韩国气象厅竞赛作品）。</p>
+        <div class="res-meta"><span class="chip t">互动</span><span class="chip">JavaScript</span><span class="chip">气象</span></div>
+      </div>
+
+      <div class="res-card">
+        <div class="res-head"><a href="https://github.com/DrAmores/meteotsunami-harbor-simulator" target="_blank" rel="noopener">meteotsunami-harbor-simulator</a><span class="res-stars">—</span></div>
+        <p class="res-desc">气象海啸与港口共振的交互式模拟器，适合海岸地貌、海气相互作用专题。</p>
+        <div class="res-meta"><span class="chip t">互动</span><span class="chip">HTML</span><span class="chip">海洋</span></div>
+      </div>
+
+      <div class="res-card">
+        <div class="res-head"><a href="https://github.com/DrAmores/GFIS-Oceanografia-Ekman" target="_blank" rel="noopener">GFIS-Oceanografia-Ekman</a><span class="res-stars">—</span></div>
+        <p class="res-desc">埃克曼螺旋（Ekman spiral）的交互式讲解页，洋流、风海流教学的直观工具。</p>
+        <div class="res-meta"><span class="chip t">互动</span><span class="chip">HTML</span><span class="chip">洋流</span></div>
+      </div>
+
+      <div class="res-card">
+        <div class="res-head"><a href="https://github.com/SheriKarasick/Mapping_Earthquakes" target="_blank" rel="noopener">Mapping_Earthquakes</a><span class="res-stars">—</span></div>
+        <p class="res-desc">调用 API 实时呈现近期构造 / 海洋事件的交互地图，专为课堂增强设计。</p>
+        <div class="res-meta"><span class="chip t">互动</span><span class="chip">JavaScript</span><span class="chip">板块</span></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== 动图 / 动画 ===== -->
+  <section class="res-section section" id="cat-animation" data-cat="animation">
+    <div class="section-head">
+      <span class="kicker">RESOURCES 02</span>
+      <h2>🎞 动图 · 动画</h2>
+      <p>用 Python / Processing / Manim / WAAPI 等生成的地球科学动画与动图——可直接录屏进课件，或参考其代码改写。</p>
+    </div>
+    <div class="res-grid">
+
+      <div class="res-card">
+        <div class="res-head"><a href="https://github.com/cjt31415/scintilla" target="_blank" rel="noopener">scintilla</a><span class="res-stars">—</span></div>
+        <p class="res-desc">NASA 地球科学数据管线，生成 GLM 闪电与 ISS LIS 闪光的动画，适合大气电学、灾害专题。</p>
+        <div class="res-meta"><span class="chip t">动画</span><span class="chip">Python</span><span class="chip">大气</span></div>
+      </div>
+
+      <div class="res-card">
+        <div class="res-head"><a href="https://github.com/fluxmx/EarthReel" target="_blank" rel="noopener">EarthReel</a><span class="res-stars">—</span></div>
+        <p class="res-desc">把地球科学数据转化为电影级地球动画，适合做科普短片素材。</p>
+        <div class="res-meta"><span class="chip t">动画</span><span class="chip">Python</span><span class="chip">地球</span></div>
+      </div>
+
+      <div class="res-card">
+        <div class="res-head"><a href="https://github.com/SHADOW-MHMD/my-first-manim-project" target="_blank" rel="noopener">Earth 臭氧层科普动画</a><span class="res-stars">—</span></div>
+        <p class="res-desc">用 Manim + Python 制作的 60 秒科普动画：地球臭氧层与蒙特利尔议定书。</p>
+        <div class="res-meta"><span class="chip t">动画</span><span class="chip">Manim</span><span class="chip">大气</span></div>
+      </div>
+
+      <div class="res-card">
+        <div class="res-head"><a href="https://github.com/joyce-ma-zz/plate-tectonics-simulation" target="_blank" rel="noopener">plate-tectonics-simulation</a><span class="res-stars">—</span></div>
+        <p class="res-desc">用元胞自动机模拟三类板块边界（陆-陆汇聚 / 洋-洋张裂 / 陆-洋俯冲）的动画。</p>
+        <div class="res-meta"><span class="chip t">动画</span><span class="chip">Processing</span><span class="chip">板块</span></div>
+      </div>
+
+      <div class="res-card">
+        <div class="res-head"><a href="https://github.com/Trevesy/cities-in-deep-time" target="_blank" rel="noopener">cities-in-deep-time</a><span class="res-stars">—</span></div>
+        <p class="res-desc">深时尺度下的板块构造动画，追踪世界城市随大陆漂移的位置变化。</p>
+        <div class="res-meta"><span class="chip t">动画</span><span class="chip">—</span><span class="chip">板块</span></div>
+      </div>
+
+      <div class="res-card">
+        <div class="res-head"><a href="https://github.com/Quantamaster/Air-Quality" target="_blank" rel="noopener">Air-Quality (动态 GIF)</a><span class="res-stars">—</span></div>
+        <p class="res-desc">把城市空气质量指数（AQI）随时间变化可视化为动态 GIF，适合环境地理。</p>
+        <div class="res-meta"><span class="chip t">动画</span><span class="chip">Python</span><span class="chip">环境</span></div>
+      </div>
+
+      <div class="res-card">
+        <div class="res-head"><a href="https://github.com/srimayamohapatra/GIS-Workflows-for-Earth-Science" target="_blank" rel="noopener">GIS-Workflows-for-Earth-Science</a><span class="res-stars">—</span></div>
+        <p class="res-desc">ArcGIS 地球科学地理处理工作流集合：流域划分、地质制图、土地覆盖变化与 3D 洪水动画。</p>
+        <div class="res-meta"><span class="chip t">动画</span><span class="chip">Jupyter</span><span class="chip">GIS</span></div>
+      </div>
+
+      <div class="res-card">
+        <div class="res-head"><a href="https://github.com/jdnichollsc/solar-systems" target="_blank" rel="noopener">solar-systems</a><span class="res-stars">★ 7</span></div>
+        <p class="res-desc">用纯 Web Animations API（WAAPI）轻松创建太阳系动画，地球系统 / 天文跨学科可用。</p>
+        <div class="res-meta"><span class="chip t">动画</span><span class="chip">JavaScript</span><span class="chip">天文</span></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== 教材 / 数据 ===== -->
+  <section class="res-section section" id="cat-resources" data-cat="resources">
+    <div class="section-head">
+      <span class="kicker">RESOURCES 03</span>
+      <h2>📦 教材 · 数据资源库</h2>
+      <p>地理 / GIS / 地球系统科学的精选清单、教学资料与开源数据集——备课找素材、做项目式学习的入口。</p>
+    </div>
+    <div class="res-grid">
+
+      <div class="res-card">
+        <div class="res-head"><a href="https://github.com/GDSL-UL/Teaching_Links" target="_blank" rel="noopener">Teaching_Links</a><span class="res-stars">★ 126</span></div>
+        <p class="res-desc">地理 / 空间数据科学 / GIS / 统计的教学资源汇总库。</p>
+        <div class="res-meta"><span class="chip t">资源库</span><span class="chip">—</span><span class="chip">GIS</span></div>
+      </div>
+
+      <div class="res-card">
+        <div class="res-head"><a href="https://github.com/Joseph-Kerski/Teaching_with_GIS" target="_blank" rel="noopener">Teaching_with_GIS</a><span class="res-stars">—</span></div>
+        <p class="res-desc">由知名地理教育家 Joseph Kerski 维护：多层级、多学科的 GIS 教学资料。</p>
+        <div class="res-meta"><span class="chip t">资源库</span><span class="chip">—</span><span class="chip">GIS</span></div>
+      </div>
+
+      <div class="res-card">
+        <div class="res-head"><a href="https://github.com/barguzin/geo_data" target="_blank" rel="noopener">geo_data</a><span class="res-stars">—</span></div>
+        <p class="res-desc">汇集自开放资源、带地理参照的教学用数据集。</p>
+        <div class="res-meta"><span class="chip t">数据集</span><span class="chip">—</span><span class="chip">数据</span></div>
+      </div>
+
+      <div class="res-card">
+        <div class="res-head"><a href="https://github.com/ESIPFed/Awesome-Earth-Artificial-Intelligence" target="_blank" rel="noopener">Awesome-Earth-Artificial-Intelligence</a><span class="res-stars">★ 252</span></div>
+        <p class="res-desc">地球科学 AI 教程、笔记本、软件、数据集、课程与论文的精选清单（ESIP 维护）。</p>
+        <div class="res-meta"><span class="chip t">资源库</span><span class="chip">—</span><span class="chip">AI</span></div>
+      </div>
+
+      <div class="res-card">
+        <div class="res-head"><a href="https://github.com/jaychempan/Awesome-LWMs" target="_blank" rel="noopener">Awesome-LWMs</a><span class="res-stars">★ 380</span></div>
+        <p class="res-desc">大天气模型（Large Weather Models）与 AI for Earth / AI for Science 精选集。</p>
+        <div class="res-meta"><span class="chip t">资源库</span><span class="chip">—</span><span class="chip">天气</span></div>
+      </div>
+
+      <div class="res-card">
+        <div class="res-head"><a href="https://github.com/mpimet/awesome-earth-system-science" target="_blank" rel="noopener">awesome-earth-system-science</a><span class="res-stars">—</span></div>
+        <p class="res-desc">面向地球系统科学研究的资源精选清单。</p>
+        <div class="res-meta"><span class="chip t">资源库</span><span class="chip">—</span><span class="chip">系统科学</span></div>
+      </div>
+
+      <div class="res-card">
+        <div class="res-head"><a href="https://github.com/paezha/Transport-Geography-Teaching-Resources" target="_blank" rel="noopener">Transport-Geography-Teaching-Resources</a><span class="res-stars">—</span></div>
+        <p class="res-desc">交通地理课程的教学资源仓库。</p>
+        <div class="res-meta"><span class="chip t">资源库</span><span class="chip">—</span><span class="chip">人文地理</span></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== 跨学科 ===== -->
+  <section class="res-section section" id="cat-inter" data-cat="inter">
+    <div class="section-head">
+      <span class="kicker">RESOURCES 04</span>
+      <h2>🔬 跨学科</h2>
+      <p>地理与 AI、海洋、历史、工程等交叉的项目——支撑跨学科主题学习（PBL）与综合实践。</p>
+    </div>
+    <div class="res-grid">
+
+      <div class="res-card">
+        <div class="res-head"><a href="https://github.com/Beckybams/AI-Enhanced-Climate-Education-Tools" target="_blank" rel="noopener">AI-Enhanced-Climate-Education-Tools</a><span class="res-stars">★ 40</span></div>
+        <p class="res-desc">用 AI 打造个性化、交互式的气候变化学习体验，含学习者进度分析与自适应内容。</p>
+        <div class="res-meta"><span class="chip t">跨学科</span><span class="chip">AI</span><span class="chip">气候</span></div>
+      </div>
+
+      <div class="res-card">
+        <div class="res-head"><a href="https://github.com/eust-w/NaturalScienceWorld" target="_blank" rel="noopener">NaturalScienceWorld</a><span class="res-stars">—</span></div>
+        <p class="res-desc">双语交互式超书：理论地图、图示模型与溯源研究链接，开放源码。</p>
+        <div class="res-meta"><span class="chip t">跨学科</span><span class="chip">TypeScript</span><span class="chip">综合科学</span></div>
+      </div>
+
+      <div class="res-card">
+        <div class="res-head"><a href="https://github.com/hernypeterson/nutrient-model" target="_blank" rel="noopener">nutrient-model</a><span class="res-stars">—</span></div>
+        <p class="res-desc">海洋营养盐循环的简化箱式模型（Jupyter），可用作海洋地理 / 生态建模教学。</p>
+        <div class="res-meta"><span class="chip t">跨学科</span><span class="chip">Jupyter</span><span class="chip">海洋</span></div>
+      </div>
+
+      <div class="res-card">
+        <div class="res-head"><a href="https://github.com/dickinsonre/HistoricalWaterInventions" target="_blank" rel="noopener">HistoricalWaterInventions</a><span class="res-stars">—</span></div>
+        <p class="res-desc">可探索的世界地图 + 时间轴，呈现 8000+ 年水工程创新（水 + 历史 + 工程跨学科）。</p>
+        <div class="res-meta"><span class="chip t">跨学科</span><span class="chip">TypeScript</span><span class="chip">水/工程</span></div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="res-note">
+    📌 <b>使用建议：</b>① 互动类优先在课堂演示；② 动画类可录屏或参考代码改写；③ 资源库类用于备课找素材与项目式学习入口；④ 跨学科类支撑 PBL 与综合实践。所有链接均指向 GitHub 原仓库，请遵守各自开源协议。
+  </div>
+
+</main>
+
+<script>
+function filterRes(cat, btn){
+  document.querySelectorAll('.filterbar button').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+  document.querySelectorAll('.res-section').forEach(function(s){
+    s.style.display = (cat === 'all' || s.dataset.cat === cat) ? '' : 'none';
+  });
+  window.scrollTo({top: document.getElementById('all').offsetTop - 70, behavior:'smooth'});
+}
+</script>
+
+</body>
+</html>
