@@ -20,19 +20,29 @@
 
 ## 🌐 部署到 GitHub Pages（免费托管为网站）
 
+本机已预装 **GitHub CLI v2.103.3**（`~/.workbuddy-ai/binaries/gh/gh.exe`，已加入用户 PATH）。你只需完成一次登录：
+
 ```bash
-# 1. 在本机安装并登录 GitHub CLI（首次需要）
-#    Windows: https://cli.github.com/  或  winget install --id GitHub.cli
-#    登录:    gh auth login
-
-# 2. 创建仓库并推送（在项目目录内执行）
-gh repo create geo-cheese --public --source=. --remote=origin --push
-
-# 3. 开启 Pages：仓库 Settings → Pages → Source 选择 "main" 分支 / (root)
-#    稍候片刻即获得 https://<你的用户名>.github.io/geo-cheese/ 永久访问地址
+gh auth login          # 选 GitHub.com → HTTPS → 用浏览器登录
 ```
 
-> 由于根目录已是静态 HTML 且包含 `.nojekyll`，GitHub 不会用 Jekyll 处理，直接以静态站点发布。
+然后**一条命令**发布（脚本会自动提交改动、建仓/推送、开启 Pages）：
+
+```bash
+./deploy.sh            # 发布到公开仓库 geo-cheese
+./deploy.sh 你的仓库名   # 自定义仓库名
+```
+
+> 若 `gh` 命令在你的终端里找不到，重开一个终端窗口即可（PATH 变更需重启进程生效）。
+
+**手动等价步骤**：
+
+```bash
+gh repo create geo-cheese --public --source=. --remote=origin --push
+# 仓库 Settings → Pages → Source 选择 "main" 分支 / (root)
+```
+
+> 由于根目录已是静态 HTML 且包含 `.nojekyll`，GitHub 不会用 Jekyll 处理，直接以静态站点发布。稍候 1–2 分钟即可获得 `https://<你的用户名>.github.io/geo-cheese/` 永久访问地址。
 
 ## 📁 目录结构
 
